@@ -4,8 +4,9 @@ import { useParams, useNavigate } from 'react-router-dom';
 import { useQuery } from '@tanstack/react-query';
 import { supabase } from '@/integrations/supabase/client';
 import { Book } from '@/types/book';
-import { ArrowLeft, User, Calendar, Tag, ExternalLink } from 'lucide-react';
+import { ArrowLeft, User, Calendar, Tag } from 'lucide-react';
 import BookCard from '@/components/BookCard';
+import PDFViewer from '@/components/PDFViewer';
 import { Button } from '@/components/ui/button';
 
 const BookDetail = () => {
@@ -156,26 +157,25 @@ const BookDetail = () => {
                       </div>
                     </div>
                   )}
-
-                  {book.pdf_drive_link && (
-                    <Button className="bg-orange-600 hover:bg-orange-700">
-                      <ExternalLink className="h-4 w-4 mr-2" />
-                      <a href={book.pdf_drive_link} target="_blank" rel="noopener noreferrer">
-                        Read Online
-                      </a>
-                    </Button>
-                  )}
                 </div>
               </div>
             </div>
 
             {/* Description */}
             {book.description && (
-              <div className="bg-white rounded-lg shadow-md p-6">
+              <div className="bg-white rounded-lg shadow-md p-6 mb-6">
                 <h2 className="text-xl font-bold text-gray-900 mb-4">Description</h2>
                 <div className="prose prose-gray max-w-none">
                   <p className="text-gray-700 leading-relaxed">{book.description}</p>
                 </div>
+              </div>
+            )}
+
+            {/* PDF Viewer */}
+            {book.pdf_drive_link && (
+              <div className="mb-6">
+                <h2 className="text-xl font-bold text-gray-900 mb-4">Read Online</h2>
+                <PDFViewer pdfUrl={book.pdf_drive_link} title={book.title} />
               </div>
             )}
           </div>
