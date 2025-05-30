@@ -6,8 +6,8 @@ import { Button } from '@/components/ui/button';
 import 'react-pdf/dist/esm/Page/AnnotationLayer.css';
 import 'react-pdf/dist/esm/Page/TextLayer.css';
 
-// Set up PDF.js worker
-pdfjs.GlobalWorkerOptions.workerSrc = `//unpkg.com/pdfjs-dist@${pdfjs.version}/build/pdf.worker.min.js`;
+// Set up PDF.js worker with proper CDN URL
+pdfjs.GlobalWorkerOptions.workerSrc = `//cdnjs.cloudflare.com/ajax/libs/pdf.js/${pdfjs.version}/pdf.worker.min.js`;
 
 interface PDFViewerProps {
   pdfUrl: string;
@@ -47,12 +47,14 @@ const PDFViewer: React.FC<PDFViewerProps> = ({ pdfUrl, title }) => {
   }, []);
 
   const onDocumentLoadSuccess = ({ numPages }: { numPages: number }) => {
+    console.log('PDF loaded successfully, pages:', numPages);
     setNumPages(numPages);
     setLoading(false);
     setError('');
   };
 
-  const onDocumentLoadError = () => {
+  const onDocumentLoadError = (error: any) => {
+    console.error('PDF load error:', error);
     setError('Failed to load PDF. Please try again later.');
     setLoading(false);
   };
@@ -153,6 +155,11 @@ const PDFViewer: React.FC<PDFViewerProps> = ({ pdfUrl, title }) => {
                   <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-orange-600"></div>
                 </div>
               }
+              options={{
+                cMapUrl: 'https://cdn.jsdelivr.net/npm/pdfjs-dist@3.11.174/cmaps/',
+                cMapPacked: true,
+                standardFontDataUrl: 'https://cdn.jsdelivr.net/npm/pdfjs-dist@3.11.174/standard_fonts/',
+              }}
             >
               <Page
                 pageNumber={pageNumber}
