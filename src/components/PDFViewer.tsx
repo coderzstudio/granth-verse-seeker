@@ -21,6 +21,7 @@ const PDFViewer: React.FC<PDFViewerProps> = ({ pdfUrl, title }) => {
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string>('');
   const [useIframe, setUseIframe] = useState<boolean>(false);
+  const [processedUrl, setProcessedUrl] = useState<string>('');
 
   useEffect(() => {
     // Reset state when PDF URL changes
@@ -29,6 +30,35 @@ const PDFViewer: React.FC<PDFViewerProps> = ({ pdfUrl, title }) => {
     setPageNumber(1);
     setNumPages(0);
     setUseIframe(false);
+    
+    // Process the URL for better compatibility
+    let url = pdfUrl;
+    
+    // Handle Google Drive URLs
+    if (pdfUrl.includes('drive.google.com')) {
+      console.log('Processing Google Drive URL:', pdfUrl);
+      
+      // Extract file ID from various Google Drive URL formats
+      let fileId = '';
+      
+      if (pdfUrl.includes('/file/d/')) {
+        fileId = pdfUrl.match(/\/file\/d\/([a-zA-Z0-9-_]+)/)?.[1] || '';
+      } else if (pdfUrl.includes('id=')) {
+        fileId = pdfUrl.match(/id=([a-zA-Z0-9-_]+)/)?.[1] || '';
+      }
+      
+      if (fileId) {
+        // Use direct download URL for react-pdf
+        url = `https://drive.google.com/uc?export=download&id=${fileId}`;
+        console.log('Converted to direct URL:', url);
+      } else {
+        // Fallback to iframe for complex URLs
+        setUseIframe(true);
+        url = pdfUrl.replace('/preview', '/preview');
+      }
+    }
+    
+    setProcessedUrl(url);
   }, [pdfUrl]);
 
   const onDocumentLoadSuccess = ({ numPages }: { numPages: number }) => {
@@ -42,8 +72,9 @@ const PDFViewer: React.FC<PDFViewerProps> = ({ pdfUrl, title }) => {
     console.error('PDF load error:', error);
     setLoading(false);
     
-    // Try iframe fallback for certain URLs
+    // Try iframe fallback for Google Drive or any failed URLs
     if (pdfUrl.includes('drive.google.com') || pdfUrl.includes('docs.google.com')) {
+      console.log('Switching to iframe fallback for Google Drive');
       setUseIframe(true);
       setError('');
     } else {
@@ -88,6 +119,7 @@ const PDFViewer: React.FC<PDFViewerProps> = ({ pdfUrl, title }) => {
         <div className="text-center">
           <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-orange-600 mx-auto mb-4"></div>
           <p className="text-gray-600">Loading PDF...</p>
+          <p className="text-sm text-gray-500 mt-2">Processing Google Drive link...</p>
         </div>
       </div>
     );
@@ -137,12 +169,13 @@ const PDFViewer: React.FC<PDFViewerProps> = ({ pdfUrl, title }) => {
             className="w-full h-[80vh] border-0"
             title={title}
             loading="lazy"
+            allow="autoplay"
           />
         </div>
         
         <div className="p-2 bg-orange-50 border-t border-orange-200">
           <p className="text-xs text-orange-800 text-center">
-            PDF content is displayed securely. Use the external link to open in a new tab if needed.
+            PDF content is displayed securely via Google Drive. Use the external link to open in a new tab if needed.
           </p>
         </div>
       </div>
@@ -156,7 +189,7 @@ const PDFViewer: React.FC<PDFViewerProps> = ({ pdfUrl, title }) => {
       <div className="flex items-center justify-between p-4 border-b border-gray-200 bg-gray-50">
         <div className="flex items-center space-x-2">
           <Button
-            onClick={goToPrevPage}
+            onClick={() => setPageNumber(prev => Math.max(prev - 1, 1))}
             disabled={pageNumber <= 1}
             variant="outline"
             size="sm"
@@ -167,7 +200,7 @@ const PDFViewer: React.FC<PDFViewerProps> = ({ pdfUrl, title }) => {
             Page {pageNumber} of {numPages}
           </span>
           <Button
-            onClick={goToNextPage}
+            onClick={() => setPageNumber(prev => Math.min(prev + 1, numPages))}
             disabled={pageNumber >= numPages}
             variant="outline"
             size="sm"
@@ -177,11 +210,11 @@ const PDFViewer: React.FC<PDFViewerProps> = ({ pdfUrl, title }) => {
         </div>
 
         <div className="flex items-center space-x-2">
-          <Button onClick={zoomOut} variant="outline" size="sm">
+          <Button onClick={() => setScale(prev => Math.max(prev - 0.2, 0.5))} variant="outline" size="sm">
             <ZoomOut className="h-4 w-4" />
           </Button>
           <span className="text-sm font-medium">{Math.round(scale * 100)}%</span>
-          <Button onClick={zoomIn} variant="outline" size="sm">
+          <Button onClick={() => setScale(prev => Math.min(prev + 0.2, 3.0))} variant="outline" size="sm">
             <ZoomIn className="h-4 w-4" />
           </Button>
           <Button onClick={openInNewTab} variant="outline" size="sm">
@@ -195,12 +228,15 @@ const PDFViewer: React.FC<PDFViewerProps> = ({ pdfUrl, title }) => {
         <div className="flex justify-center">
           <div className="bg-white shadow-lg">
             <Document
-              file={pdfUrl}
+              file={processedUrl}
               onLoadSuccess={onDocumentLoadSuccess}
               onLoadError={onDocumentLoadError}
               loading={
                 <div className="flex items-center justify-center h-96">
-                  <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-orange-600"></div>
+                  <div className="text-center">
+                    <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-orange-600 mx-auto mb-2"></div>
+                    <p className="text-sm text-gray-600">Loading PDF document...</p>
+                  </div>
                 </div>
               }
               options={{
