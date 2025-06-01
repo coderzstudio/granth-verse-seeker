@@ -12,11 +12,11 @@ const Navbar = () => {
           {/* Logo */}
           <div className="flex items-center">
             <img
-              src="https://images.unsplash.com/photo-1578662996442-48f60103fc96?w=40&h=40&fit=crop&crop=center"
+              src="https://i.postimg.cc/hvhb1QrF/20240708-235028.jpg?w=40&h=40&fit=crop&crop=center"
               alt="Sanatani Gyan Logo"
               className="h-10 w-10 rounded-full mr-3"
             />
-            <span className="text-xl font-bold">🕉️ Sanatani Gyan</span>
+            <span className="text-xl font-bold">Sanatani Gyan</span>
           </div>
 
           {/* Mobile menu button */}
