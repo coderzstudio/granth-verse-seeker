@@ -54,7 +54,7 @@ const ImageCarousel = () => {
 
   if (images.length === 0) {
     return (
-      <div className="relative h-64 w-[734px] bg-gradient-to-r from-orange-200 to-red-200 flex items-center justify-center mx-auto">
+      <div className="relative h-64 max-w-4xl bg-gradient-to-r from-orange-200 to-red-200 flex items-center justify-center mx-auto">
         <div className="text-center">
           <div className="text-2xl font-bold text-gray-700 mb-2">Welcome to Sanatani Gyan</div>
           <div className="text-gray-600">Sacred Hindu Literature & Spiritual Texts</div>
@@ -64,23 +64,18 @@ const ImageCarousel = () => {
   }
 
   return (
-    <div className="relative h-64 w-[734px] overflow-hidden bg-gray-900 mx-auto">
+    <div className="relative h-64 max-w-4xl overflow-hidden bg-gray-900 mx-auto">
       {/* Images */}
       <div 
         className="flex transition-transform duration-500 ease-in-out h-full"
         style={{ transform: `translateX(-${currentIndex * 100}%)` }}
       >
         {images.map((image, index) => (
-          <div key={image.id} className="min-w-full h-full relative">
+          <div key={image.id} className="w-full h-full flex-shrink-0 relative">
             <img
               src={image.image_url}
               alt={image.title || `Slide ${index + 1}`}
               className="w-full h-full object-cover"
-              style={{ 
-                width: '734px',
-                height: '256px',
-                objectFit: 'cover'
-              }}
             />
             <div className="absolute inset-0 bg-black bg-opacity-40 flex items-center justify-center">
               <div className="text-center text-white px-4">
