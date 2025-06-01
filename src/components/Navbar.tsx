@@ -19,6 +19,24 @@ const Navbar = () => {
             <span className="text-xl font-bold">Sanatani Gyan</span>
           </div>
 
+          {/* Desktop Menu */}
+          <div className="hidden md:block">
+            <div className="ml-10 flex items-baseline space-x-4">
+              <a href="#" className="hover:bg-orange-700 px-3 py-2 rounded-md text-sm font-medium transition-colors">
+                Home
+              </a>
+              <a href="#" className="hover:bg-orange-700 px-3 py-2 rounded-md text-sm font-medium transition-colors">
+                Books
+              </a>
+              <a href="#" className="hover:bg-orange-700 px-3 py-2 rounded-md text-sm font-medium transition-colors">
+                Categories
+              </a>
+              <a href="#" className="hover:bg-orange-700 px-3 py-2 rounded-md text-sm font-medium transition-colors">
+                About
+              </a>
+            </div>
+          </div>
+
           {/* Mobile menu button */}
           <div className="md:hidden">
             <button
@@ -38,9 +56,18 @@ const Navbar = () => {
         {isMobileMenuOpen && (
           <div className="md:hidden">
             <div className="px-2 pt-2 pb-3 space-y-1 bg-orange-700 rounded-b-lg">
-              <div className="block px-3 py-2 text-base font-medium">
-                Welcome to Sanatani Gyan
-              </div>
+              <a href="#" className="block px-3 py-2 text-base font-medium hover:bg-orange-800 rounded-md transition-colors">
+                Home
+              </a>
+              <a href="#" className="block px-3 py-2 text-base font-medium hover:bg-orange-800 rounded-md transition-colors">
+                Books
+              </a>
+              <a href="#" className="block px-3 py-2 text-base font-medium hover:bg-orange-800 rounded-md transition-colors">
+                Categories
+              </a>
+              <a href="#" className="block px-3 py-2 text-base font-medium hover:bg-orange-800 rounded-md transition-colors">
+                About
+              </a>
             </div>
           </div>
         )}

@@ -54,7 +54,7 @@ const ImageCarousel = () => {
 
   if (images.length === 0) {
     return (
-      <div className="relative h-96 bg-gradient-to-r from-orange-200 to-red-200 flex items-center justify-center">
+      <div className="relative h-64 bg-gradient-to-r from-orange-200 to-red-200 flex items-center justify-center">
         <div className="text-center">
           <div className="text-2xl font-bold text-gray-700 mb-2">Welcome to Sanatani Gyan</div>
           <div className="text-gray-600">Sacred Hindu Literature & Spiritual Texts</div>
@@ -64,7 +64,7 @@ const ImageCarousel = () => {
   }
 
   return (
-    <div className="relative h-96 overflow-hidden bg-gray-900">
+    <div className="relative h-64 overflow-hidden bg-gray-900">
       {/* Images */}
       <div 
         className="flex transition-transform duration-500 ease-in-out h-full"
