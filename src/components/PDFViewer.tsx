@@ -142,7 +142,7 @@ const PDFViewer: React.FC<PDFViewerProps> = ({ pdfUrl, title }) => {
           <h3 className="text-lg font-medium text-gray-900">Loading {title}</h3>
           <p className="text-sm text-gray-600">
             {pdfUrl.includes('drive.google.com') 
-              ? "Processing Google Drive link..."
+              ? "Processing......"
               : "Loading PDF document..."}
           </p>
           <Button 
