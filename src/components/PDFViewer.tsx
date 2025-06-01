@@ -74,7 +74,7 @@ const PDFViewer: React.FC<PDFViewerProps> = ({ pdfUrl, title }) => {
     if (pdfUrl.includes('drive.google.com/file/d/')) {
       const fileId = pdfUrl.match(/\/d\/([a-zA-Z0-9-_]+)/)?.[1];
       if (fileId) {
-        urlToOpen = `https://drive.google.com/file/d/${fileId}/view`;
+        urlToOpen = `https://drive.google.com/file/d/${fileId}/preview`;
       }
     }
     
