@@ -46,61 +46,61 @@ const CategoryBooksSection = () => {
   const scrollLeft = (categoryName: string) => {
     const container = document.getElementById(`category-${categoryName}`);
     if (container) {
-      container.scrollBy({ left: -300, behavior: 'smooth' });
+      container.scrollBy({ left: -200, behavior: 'smooth' });
     }
   };
 
   const scrollRight = (categoryName: string) => {
     const container = document.getElementById(`category-${categoryName}`);
     if (container) {
-      container.scrollBy({ left: 300, behavior: 'smooth' });
+      container.scrollBy({ left: 200, behavior: 'smooth' });
     }
   };
 
   return (
-    <section className="py-16 bg-gradient-to-br from-orange-50 to-red-50">
+    <section className="py-8 bg-gradient-to-br from-orange-50 to-red-50">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <h2 className="text-3xl font-bold text-gray-900 mb-8 text-center">
-          Browse by Category
+        <h2 className="text-2xl font-bold text-gray-900 mb-6 text-left">
+          Category
         </h2>
         
-        <div className="space-y-12">
+        <div className="space-y-8">
           {categories.map((category) => {
             const books = booksByCategory[category.name] || [];
             if (books.length === 0) return null;
 
             return (
               <div key={category.id}>
-                <div className="flex items-center justify-between mb-6">
-                  <h3 className="text-2xl font-semibold text-gray-800">
+                <div className="flex items-center justify-between mb-4">
+                  <h3 className="text-lg font-semibold text-gray-800">
                     {category.name}
                   </h3>
                   <div className="flex space-x-2">
                     <button
                       onClick={() => scrollLeft(category.name)}
-                      className="p-2 rounded-full bg-white shadow-md hover:shadow-lg transition-shadow"
+                      className="p-1 rounded-full bg-white shadow-md hover:shadow-lg transition-shadow"
                     >
-                      <ChevronLeft className="h-5 w-5 text-gray-600" />
+                      <ChevronLeft className="h-4 w-4 text-gray-600" />
                     </button>
                     <button
                       onClick={() => scrollRight(category.name)}
-                      className="p-2 rounded-full bg-white shadow-md hover:shadow-lg transition-shadow"
+                      className="p-1 rounded-full bg-white shadow-md hover:shadow-lg transition-shadow"
                     >
-                      <ChevronRight className="h-5 w-5 text-gray-600" />
+                      <ChevronRight className="h-4 w-4 text-gray-600" />
                     </button>
                   </div>
                 </div>
                 
                 <div
                   id={`category-${category.name}`}
-                  className="flex space-x-4 overflow-x-auto scrollbar-hide scroll-smooth pb-4"
+                  className="flex space-x-3 overflow-x-auto scrollbar-hide scroll-smooth pb-4"
                   style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}
                 >
                   {books.slice(0, 10).map((book) => (
                     <div
                       key={book.id}
                       onClick={() => navigate(`/book/${book.id}`)}
-                      className="flex-shrink-0 w-48 bg-white rounded-lg shadow-md hover:shadow-xl transition-all duration-300 cursor-pointer transform hover:-translate-y-1"
+                      className="flex-shrink-0 w-32 bg-white rounded-lg shadow-md hover:shadow-xl transition-all duration-300 cursor-pointer transform hover:-translate-y-1"
                     >
                       <div className="aspect-[3/4] bg-gradient-to-br from-orange-100 to-red-100 rounded-t-lg overflow-hidden">
                         {book.image_url ? (
@@ -114,21 +114,21 @@ const CategoryBooksSection = () => {
                           />
                         ) : (
                           <div className="w-full h-full flex items-center justify-center">
-                            <BookOpen className="h-12 w-12 text-orange-400" />
+                            <BookOpen className="h-8 w-8 text-orange-400" />
                           </div>
                         )}
                       </div>
-                      <div className="p-4">
-                        <h4 className="font-semibold text-gray-900 text-sm line-clamp-2 mb-2">
+                      <div className="p-2">
+                        <h4 className="font-semibold text-gray-900 text-xs line-clamp-2 mb-1">
                           {book.title}
                         </h4>
                         {book.author && (
                           <p className="text-xs text-gray-600 truncate">
-                            by {book.author}
+                            {book.author}
                           </p>
                         )}
-                        <div className="mt-2">
-                          <span className="inline-block px-2 py-1 bg-orange-100 text-orange-800 text-xs rounded-full">
+                        <div className="mt-1">
+                          <span className="inline-block px-1 py-0.5 bg-orange-100 text-orange-800 text-xs rounded-full">
                             {book.language}
                           </span>
                         </div>

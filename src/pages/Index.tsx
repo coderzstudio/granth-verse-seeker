@@ -5,6 +5,7 @@ import ImageCarousel from '@/components/ImageCarousel';
 import CategoryBooksSection from '@/components/CategoryBooksSection';
 import LanguageBooksSection from '@/components/LanguageBooksSection';
 import DonationSection from '@/components/DonationSection';
+import Footer from '@/components/Footer';
 
 const Index = () => {
   return (
@@ -26,6 +27,9 @@ const Index = () => {
         {/* Donation Section */}
         <DonationSection />
       </div>
+      
+      {/* Footer */}
+      <Footer />
     </div>
   );
 };
