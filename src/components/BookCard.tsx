@@ -17,9 +17,9 @@ const BookCard: React.FC<BookCardProps> = ({ book }) => {
 
   return (
     <div 
-      onClick={handleClick}
-      className="bg-white rounded-lg shadow-md hover:shadow-xl transition-all duration-300 cursor-pointer transform hover:-translate-y-1 border border-orange-100"
-    >
+  onClick={handleClick}
+  className="max-w-[220px] bg-white rounded-lg shadow-md hover:shadow-xl transition-all duration-300 cursor-pointer transform hover:-translate-y-1 border border-orange-100"
+>
       {/* Book Image */}
       <div className="aspect-[3/4] bg-gradient-to-br from-orange-100 to-red-100 rounded-t-lg overflow-hidden">
         {book.image_url ? (
