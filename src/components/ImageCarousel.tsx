@@ -17,6 +17,24 @@ const ImageCarousel = () => {
 
   // Fetch carousel images from Supabase
   const { data: images = [] } = useQuery({
+import React, { useState, useEffect } from 'react';
+import { useQuery } from '@tanstack/react-query';
+import { supabase } from '@/integrations/supabase/client';
+import { ChevronLeft, ChevronRight } from 'lucide-react';
+
+interface CarouselImage {
+  id: string;
+  image_url: string;
+  title?: string;
+  description?: string;
+  display_order: number;
+}
+
+const ImageCarousel = () => {
+  const [currentIndex, setCurrentIndex] = useState(0);
+
+  // Fetch carousel images from Supabase
+  const { data: images = [] } = useQuery({
     queryKey: ['carousel-images'],
     queryFn: async () => {
       const { data, error } = await supabase
@@ -54,7 +72,7 @@ const ImageCarousel = () => {
 
   if (images.length === 0) {
     return (
-      <div className="relative h-60 bg-gradient-to-r from-orange-200 to-red-200 flex items-center justify-center">
+      <div className="relative h-[385px] w-[734px] bg-gradient-to-r from-orange-200 to-red-200 flex items-center justify-center mx-auto">
         <div className="text-center">
           <div className="text-2xl font-bold text-gray-700 mb-2">Welcome to Sanatani Gyan</div>
           <div className="text-gray-600">Sacred Hindu Literature & Spiritual Texts</div>
@@ -64,7 +82,7 @@ const ImageCarousel = () => {
   }
 
   return (
-    <div className="relative h-60 overflow-hidden bg-gray-900">
+    <div className="relative h-[385px] w-[734px] overflow-hidden bg-gray-900 mx-auto">
       {/* Images */}
       <div 
         className="flex transition-transform duration-500 ease-in-out h-full"
@@ -76,6 +94,11 @@ const ImageCarousel = () => {
               src={image.image_url}
               alt={image.title || `Slide ${index + 1}`}
               className="w-full h-full object-cover"
+              style={{ 
+                width: '734px',
+                height: '385px',
+                objectFit: 'cover'
+              }}
             />
             <div className="absolute inset-0 bg-black bg-opacity-40 flex items-center justify-center">
               <div className="text-center text-white px-4">
