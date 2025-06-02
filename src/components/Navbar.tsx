@@ -1,9 +1,16 @@
 
 import React, { useState } from 'react';
 import { Menu, X } from 'lucide-react';
+import {
+  Sheet,
+  SheetContent,
+  SheetHeader,
+  SheetTitle,
+  SheetTrigger,
+} from "@/components/ui/sheet";
 
 const Navbar = () => {
-  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
 
   return (
     <nav className="fixed top-0 left-0 right-0 bg-gradient-to-r from-orange-600 to-red-600 text-white shadow-lg z-50">
@@ -37,40 +44,57 @@ const Navbar = () => {
             </div>
           </div>
 
-          {/* Mobile menu button */}
+          {/* Mobile menu trigger */}
           <div className="md:hidden">
-            <button
-              onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-              className="p-2 rounded-md hover:bg-orange-700 transition-colors"
-            >
-              {isMobileMenuOpen ? (
-                <X className="h-6 w-6" />
-              ) : (
-                <Menu className="h-6 w-6" />
-              )}
-            </button>
+            <Sheet open={isMenuOpen} onOpenChange={setIsMenuOpen}>
+              <SheetTrigger asChild>
+                <button className="p-2 rounded-md hover:bg-orange-700 transition-colors">
+                  <Menu className="h-6 w-6" />
+                </button>
+              </SheetTrigger>
+              <SheetContent 
+                side="right" 
+                className="w-1/2 bg-gradient-to-b from-orange-600 to-red-600 border-l-0 text-white"
+              >
+                <SheetHeader className="border-b border-orange-500 pb-4 mb-6">
+                  <SheetTitle className="text-white text-xl font-bold text-left">
+                    Sanatani Gyan
+                  </SheetTitle>
+                </SheetHeader>
+                <div className="flex flex-col space-y-6">
+                  <a 
+                    href="#" 
+                    className="text-lg font-medium hover:text-orange-200 transition-colors py-2 px-4 hover:bg-orange-700 rounded-md"
+                    onClick={() => setIsMenuOpen(false)}
+                  >
+                    Home
+                  </a>
+                  <a 
+                    href="#" 
+                    className="text-lg font-medium hover:text-orange-200 transition-colors py-2 px-4 hover:bg-orange-700 rounded-md"
+                    onClick={() => setIsMenuOpen(false)}
+                  >
+                    Books
+                  </a>
+                  <a 
+                    href="#" 
+                    className="text-lg font-medium hover:text-orange-200 transition-colors py-2 px-4 hover:bg-orange-700 rounded-md"
+                    onClick={() => setIsMenuOpen(false)}
+                  >
+                    Categories
+                  </a>
+                  <a 
+                    href="#" 
+                    className="text-lg font-medium hover:text-orange-200 transition-colors py-2 px-4 hover:bg-orange-700 rounded-md"
+                    onClick={() => setIsMenuOpen(false)}
+                  >
+                    About
+                  </a>
+                </div>
+              </SheetContent>
+            </Sheet>
           </div>
         </div>
-
-        {/* Mobile menu */}
-        {isMobileMenuOpen && (
-          <div className="md:hidden">
-            <div className="px-2 pt-2 pb-3 space-y-1 bg-orange-700 rounded-b-lg">
-              <a href="#" className="block px-3 py-2 text-base font-medium hover:bg-orange-800 rounded-md transition-colors">
-                Home
-              </a>
-              <a href="#" className="block px-3 py-2 text-base font-medium hover:bg-orange-800 rounded-md transition-colors">
-                Books
-              </a>
-              <a href="#" className="block px-3 py-2 text-base font-medium hover:bg-orange-800 rounded-md transition-colors">
-                Categories
-              </a>
-              <a href="#" className="block px-3 py-2 text-base font-medium hover:bg-orange-800 rounded-md transition-colors">
-                About
-              </a>
-            </div>
-          </div>
-        )}
       </div>
     </nav>
   );
