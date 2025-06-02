@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Menu, X } from 'lucide-react';
+import { Menu } from 'lucide-react';
 import {
   Sheet,
   SheetContent,
@@ -20,24 +20,24 @@ const Navbar = () => {
             <img
               src="https://i.postimg.cc/hvhb1QrF/20240708-235028.jpg?w=40&h=40&fit=crop&crop=center"
               alt="Sanatani Gyan Logo"
-              className="h-10 w-10 rounded-full mr-3"
+              className="h-8 w-8 rounded-full mr-2" // Reduced image size
             />
-            <span className="text-lg font-bold">Sanatani Gyan</span> {/* Changed from text-xl to text-lg */}
+            <span className="text-sm font-bold">Sanatani Gyan</span> {/* Changed to text-sm */}
           </div>
 
           {/* Desktop Menu */}
           <div className="hidden md:block">
-            <div className="ml-10 flex items-baseline space-x-4">
-              <a href="#" className="hover:bg-orange-700 px-3 py-2 rounded-md text-xs font-medium transition-colors"> {/* Changed from text-sm to text-xs */}
+            <div className="ml-6 flex items-baseline space-x-2"> {/* Reduced spacing */}
+              <a href="#" className="hover:bg-orange-700 px-2 py-1 rounded-md text-xs font-medium transition-colors">
                 Home
               </a>
-              <a href="#" className="hover:bg-orange-700 px-3 py-2 rounded-md text-xs font-medium transition-colors"> {/* Changed from text-sm to text-xs */}
+              <a href="#" className="hover:bg-orange-700 px-2 py-1 rounded-md text-xs font-medium transition-colors">
                 Books
               </a>
-              <a href="#" className="hover:bg-orange-700 px-3 py-2 rounded-md text-xs font-medium transition-colors"> {/* Changed from text-sm to text-xs */}
+              <a href="#" className="hover:bg-orange-700 px-2 py-1 rounded-md text-xs font-medium transition-colors">
                 Categories
               </a>
-              <a href="#" className="hover:bg-orange-700 px-3 py-2 rounded-md text-xs font-medium transition-colors"> {/* Changed from text-sm to text-xs */}
+              <a href="#" className="hover:bg-orange-700 px-2 py-1 rounded-md text-xs font-medium transition-colors">
                 About
               </a>
             </div>
@@ -47,44 +47,44 @@ const Navbar = () => {
           <div className="md:hidden">
             <Sheet open={isMenuOpen} onOpenChange={setIsMenuOpen}>
               <SheetTrigger asChild>
-                <button className="p-2 rounded-md hover:bg-orange-700 transition-colors">
-                  <Menu className="h-6 w-6" />
+                <button className="p-1 rounded-md hover:bg-orange-700 transition-colors">
+                  <Menu className="h-5 w-5" /> {/* Smaller icon */}
                 </button>
               </SheetTrigger>
               <SheetContent 
                 side="right" 
-                className="w-1/2 bg-gradient-to-b from-orange-600 to-red-600 border-l-0 text-white"
+                className="w-[200px] bg-gradient-to-b from-orange-600 to-red-600 border-l-0 text-white" // Narrower sheet
               >
-                <SheetHeader className="border-b border-orange-500 pb-4 mb-6">
-                  <SheetTitle className="text-white text-lg font-bold text-left"> {/* Changed from text-xl to text-lg */}
+                <SheetHeader className="border-b border-orange-500 pb-3 mb-4">
+                  <SheetTitle className="text-white text-sm font-bold text-left"> {/* text-sm */}
                     Sanatani Gyan
                   </SheetTitle>
                 </SheetHeader>
-                <div className="flex flex-col space-y-6">
+                <div className="flex flex-col space-y-3">
                   <a 
                     href="#" 
-                    className="text-base font-medium hover:text-orange-200 transition-colors py-2 px-4 hover:bg-orange-700 rounded-md" {/* Changed from text-lg to text-base */}
+                    className="text-xs font-medium hover:text-orange-200 transition-colors py-1 px-3 hover:bg-orange-700 rounded-md"
                     onClick={() => setIsMenuOpen(false)}
                   >
                     Home
                   </a>
                   <a 
                     href="#" 
-                    className="text-base font-medium hover:text-orange-200 transition-colors py-2 px-4 hover:bg-orange-700 rounded-md" {/* Changed from text-lg to text-base */}
+                    className="text-xs font-medium hover:text-orange-200 transition-colors py-1 px-3 hover:bg-orange-700 rounded-md"
                     onClick={() => setIsMenuOpen(false)}
                   >
                     Books
                   </a>
                   <a 
                     href="#" 
-                    className="text-base font-medium hover:text-orange-200 transition-colors py-2 px-4 hover:bg-orange-700 rounded-md" {/* Changed from text-lg to text-base */}
+                    className="text-xs font-medium hover:text-orange-200 transition-colors py-1 px-3 hover:bg-orange-700 rounded-md"
                     onClick={() => setIsMenuOpen(false)}
                   >
                     Categories
                   </a>
                   <a 
                     href="#" 
-                    className="text-base font-medium hover:text-orange-200 transition-colors py-2 px-4 hover:bg-orange-700 rounded-md" {/* Changed from text-lg to text-base */}
+                    className="text-xs font-medium hover:text-orange-200 transition-colors py-1 px-3 hover:bg-orange-700 rounded-md"
                     onClick={() => setIsMenuOpen(false)}
                   >
                     About
