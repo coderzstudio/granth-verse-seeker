@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import { Menu, X } from 'lucide-react';
 import {
@@ -23,22 +22,22 @@ const Navbar = () => {
               alt="Sanatani Gyan Logo"
               className="h-10 w-10 rounded-full mr-3"
             />
-            <span className="text-xl font-bold">Sanatani Gyan</span>
+            <span className="text-lg font-bold">Sanatani Gyan</span> {/* Changed from text-xl to text-lg */}
           </div>
 
           {/* Desktop Menu */}
           <div className="hidden md:block">
             <div className="ml-10 flex items-baseline space-x-4">
-              <a href="#" className="hover:bg-orange-700 px-3 py-2 rounded-md text-sm font-medium transition-colors">
+              <a href="#" className="hover:bg-orange-700 px-3 py-2 rounded-md text-xs font-medium transition-colors"> {/* Changed from text-sm to text-xs */}
                 Home
               </a>
-              <a href="#" className="hover:bg-orange-700 px-3 py-2 rounded-md text-sm font-medium transition-colors">
+              <a href="#" className="hover:bg-orange-700 px-3 py-2 rounded-md text-xs font-medium transition-colors"> {/* Changed from text-sm to text-xs */}
                 Books
               </a>
-              <a href="#" className="hover:bg-orange-700 px-3 py-2 rounded-md text-sm font-medium transition-colors">
+              <a href="#" className="hover:bg-orange-700 px-3 py-2 rounded-md text-xs font-medium transition-colors"> {/* Changed from text-sm to text-xs */}
                 Categories
               </a>
-              <a href="#" className="hover:bg-orange-700 px-3 py-2 rounded-md text-sm font-medium transition-colors">
+              <a href="#" className="hover:bg-orange-700 px-3 py-2 rounded-md text-xs font-medium transition-colors"> {/* Changed from text-sm to text-xs */}
                 About
               </a>
             </div>
@@ -57,35 +56,35 @@ const Navbar = () => {
                 className="w-1/2 bg-gradient-to-b from-orange-600 to-red-600 border-l-0 text-white"
               >
                 <SheetHeader className="border-b border-orange-500 pb-4 mb-6">
-                  <SheetTitle className="text-white text-xl font-bold text-left">
+                  <SheetTitle className="text-white text-lg font-bold text-left"> {/* Changed from text-xl to text-lg */}
                     Sanatani Gyan
                   </SheetTitle>
                 </SheetHeader>
                 <div className="flex flex-col space-y-6">
                   <a 
                     href="#" 
-                    className="text-lg font-medium hover:text-orange-200 transition-colors py-2 px-4 hover:bg-orange-700 rounded-md"
+                    className="text-base font-medium hover:text-orange-200 transition-colors py-2 px-4 hover:bg-orange-700 rounded-md" {/* Changed from text-lg to text-base */}
                     onClick={() => setIsMenuOpen(false)}
                   >
                     Home
                   </a>
                   <a 
                     href="#" 
-                    className="text-lg font-medium hover:text-orange-200 transition-colors py-2 px-4 hover:bg-orange-700 rounded-md"
+                    className="text-base font-medium hover:text-orange-200 transition-colors py-2 px-4 hover:bg-orange-700 rounded-md" {/* Changed from text-lg to text-base */}
                     onClick={() => setIsMenuOpen(false)}
                   >
                     Books
                   </a>
                   <a 
                     href="#" 
-                    className="text-lg font-medium hover:text-orange-200 transition-colors py-2 px-4 hover:bg-orange-700 rounded-md"
+                    className="text-base font-medium hover:text-orange-200 transition-colors py-2 px-4 hover:bg-orange-700 rounded-md" {/* Changed from text-lg to text-base */}
                     onClick={() => setIsMenuOpen(false)}
                   >
                     Categories
                   </a>
                   <a 
                     href="#" 
-                    className="text-lg font-medium hover:text-orange-200 transition-colors py-2 px-4 hover:bg-orange-700 rounded-md"
+                    className="text-base font-medium hover:text-orange-200 transition-colors py-2 px-4 hover:bg-orange-700 rounded-md" {/* Changed from text-lg to text-base */}
                     onClick={() => setIsMenuOpen(false)}
                   >
                     About
