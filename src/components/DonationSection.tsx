@@ -10,7 +10,7 @@ const DonationSection = () => {
           {/* Image Section */}
           <div className="relative">
             <img
-              src="https://images.unsplash.com/photo-1532012197267-da84d127e765?w=600&h=400&fit=crop"
+              src="https://i.postimg.cc/7LbhHLcm/a94ce74134950bd24ca6a56b59c64919.jpg?w=600&h=400&fit=crop"
               alt="Support Free Education"
               className="rounded-lg shadow-2xl w-full h-60 object-cover"
             />
