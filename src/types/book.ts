@@ -6,7 +6,6 @@ export interface Book {
   short_description?: string;
   image_url?: string;
   pdf_drive_link?: string;
-  language: string;
   category: string;
   tags?: string[];
   author?: string;
@@ -15,13 +14,6 @@ export interface Book {
   isbn?: string;
   created_at: string;
   updated_at: string;
-}
-
-export interface Language {
-  id: string;
-  name: string;
-  code: string;
-  created_at: string;
 }
 
 export interface Category {

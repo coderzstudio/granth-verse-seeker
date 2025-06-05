@@ -18,7 +18,6 @@ export type Database = {
           id: string
           image_url: string | null
           isbn: string | null
-          language: string
           pdf_drive_link: string | null
           publication_year: number | null
           publisher: string | null
@@ -35,7 +34,6 @@ export type Database = {
           id?: string
           image_url?: string | null
           isbn?: string | null
-          language: string
           pdf_drive_link?: string | null
           publication_year?: number | null
           publisher?: string | null
@@ -52,7 +50,6 @@ export type Database = {
           id?: string
           image_url?: string | null
           isbn?: string | null
-          language?: string
           pdf_drive_link?: string | null
           publication_year?: number | null
           publisher?: string | null
@@ -112,27 +109,6 @@ export type Database = {
         Update: {
           created_at?: string
           description?: string | null
-          id?: string
-          name?: string
-        }
-        Relationships: []
-      }
-      languages: {
-        Row: {
-          code: string
-          created_at: string
-          id: string
-          name: string
-        }
-        Insert: {
-          code: string
-          created_at?: string
-          id?: string
-          name: string
-        }
-        Update: {
-          code?: string
-          created_at?: string
           id?: string
           name?: string
         }
