@@ -32,21 +32,21 @@ const DonationSection = () => {
                 <div className="flex items-center justify-center w-12 h-12 bg-white/20 rounded-full mx-auto mb-2">
                   <BookOpen className="h-6 w-6" />
                 </div>
-                <div className="text-2xl font-bold">1000+</div>
+                <div className="text-2xl font-bold">300+</div>
                 <div className="text-sm text-orange-100">Books Digitized</div>
               </div>
               <div className="text-center">
                 <div className="flex items-center justify-center w-12 h-12 bg-white/20 rounded-full mx-auto mb-2">
                   <Users className="h-6 w-6" />
                 </div>
-                <div className="text-2xl font-bold">50K+</div>
+                <div className="text-2xl font-bold">1K+</div>
                 <div className="text-sm text-orange-100">Readers Served</div>
               </div>
               <div className="text-center">
                 <div className="flex items-center justify-center w-12 h-12 bg-white/20 rounded-full mx-auto mb-2">
                   <Globe className="h-6 w-6" />
                 </div>
-                <div className="text-2xl font-bold">15+</div>
+                <div className="text-2xl font-bold">8+</div>
                 <div className="text-sm text-orange-100">Languages</div>
               </div>
               <div className="text-center">
@@ -70,7 +70,7 @@ const DonationSection = () => {
             </div>
 
             <p className="text-sm text-orange-100">
-              🕉️ Every contribution helps preserve and share our sacred heritage
+              🕉️ Every contribution helps preserve and share our sacred heritage 🚩
             </p>
           </div>
         </div>
