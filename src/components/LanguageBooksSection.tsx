@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { useQuery } from '@tanstack/react-query';
 import { supabase } from '@/integrations/supabase/client';
@@ -9,8 +8,12 @@ import { useNavigate } from 'react-router-dom';
 const LanguageBooksSection = () => {
   const navigate = useNavigate();
 
-  // Fetch languages
-  const { data: languages = [] } = useQuery({
+  // Fetch languages with error handling
+  const { 
+    data: languages = [], 
+    isLoading: loadingLanguages,
+    error: languagesError 
+  } = useQuery({
     queryKey: ['languages'],
     queryFn: async () => {
       const { data, error } = await supabase.from('languages').select('*');
@@ -19,8 +22,12 @@ const LanguageBooksSection = () => {
     }
   });
 
-  // Fetch books grouped by language
-  const { data: booksByLanguage = {} } = useQuery({
+  // Fetch books grouped by language with error handling
+  const { 
+    data: booksByLanguage = {}, 
+    isLoading: loadingBooks,
+    error: booksError 
+  } = useQuery({
     queryKey: ['books-by-language'],
     queryFn: async () => {
       const { data, error } = await supabase
@@ -43,6 +50,12 @@ const LanguageBooksSection = () => {
     }
   });
 
+  // Debug logs
+  console.log('Languages:', languages);
+  console.log('Books by language:', booksByLanguage);
+  if (languagesError) console.error('Languages error:', languagesError);
+  if (booksError) console.error('Books error:', booksError);
+
   const scrollLeft = (languageName: string) => {
     const container = document.getElementById(`language-${languageName}`);
     if (container) {
@@ -56,6 +69,45 @@ const LanguageBooksSection = () => {
       container.scrollBy({ left: 200, behavior: 'smooth' });
     }
   };
+
+  // Loading state
+  if (loadingLanguages || loadingBooks) {
+    return (
+      <div className="py-8 bg-white">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="flex justify-center items-center h-32">
+            <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-orange-600"></div>
+          </div>
+        </div>
+      </div>
+    );
+  }
+
+  // Error state
+  if (languagesError || booksError) {
+    return (
+      <div className="py-8 bg-white">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center text-red-600">
+            Error loading books. Please try again later.
+          </div>
+        </div>
+      </div>
+    );
+  }
+
+  // Empty state
+  if (languages.length === 0 || Object.keys(booksByLanguage).length === 0) {
+    return (
+      <div className="py-8 bg-white">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center text-gray-500">
+            No books available at the moment.
+          </div>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <section className="py-8 bg-white">
