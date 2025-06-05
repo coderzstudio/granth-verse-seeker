@@ -12,7 +12,7 @@ const DonationSection = () => {
             <img
               src="https://images.unsplash.com/photo-1532012197267-da84d127e765?w=600&h=400&fit=crop"
               alt="Support Free Education"
-              className="rounded-lg shadow-2xl w-full h-80 object-cover"
+              className="rounded-lg shadow-2xl w-full h-60 object-cover"
             />
             <div className="absolute inset-0 bg-gradient-to-t from-black/30 to-transparent rounded-lg"></div>
           </div>
