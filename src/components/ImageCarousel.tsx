@@ -54,7 +54,7 @@ const ImageCarousel = () => {
 
   if (images.length === 0) {
     return (
-      <div className="relative h-64 max-w-4xl bg-gradient-to-r from-orange-200 to-red-200 flex items-center justify-center mx-auto">
+      <div className="relative h-64 w-full bg-gradient-to-r from-orange-200 to-red-200 flex items-center justify-center">
         <div className="text-center">
           <div className="text-2xl font-bold text-gray-700 mb-2">Welcome to Sanatani Gyan</div>
           <div className="text-gray-600">Sacred Hindu Literature & Spiritual Texts</div>
@@ -64,7 +64,7 @@ const ImageCarousel = () => {
   }
 
   return (
-    <div className="relative h-64 max-w-4xl overflow-hidden bg-gray-900 mx-auto">
+    <div className="relative h-64 w-full overflow-hidden bg-gray-900">
       {/* Images */}
       <div 
         className="flex transition-transform duration-500 ease-in-out h-full"
@@ -75,7 +75,7 @@ const ImageCarousel = () => {
             <img
               src={image.image_url}
               alt={image.title || `Slide ${index + 1}`}
-              className="w-full h-full object-cover"
+              className="w-full h-full object-contain bg-gray-900"
             />
             <div className="absolute inset-0 bg-black bg-opacity-40 flex items-center justify-center">
               <div className="text-center text-white px-4">

@@ -2,7 +2,7 @@
 import React from 'react';
 import Navbar from '@/components/Navbar';
 import ImageCarousel from '@/components/ImageCarousel';
-import CategoryBooksSection from '@/components/CategoryBooksSection';
+import RecentBooksSection from '@/components/RecentBooksSection';
 import LanguageBooksSection from '@/components/LanguageBooksSection';
 import DonationSection from '@/components/DonationSection';
 import Footer from '@/components/Footer';
@@ -18,8 +18,8 @@ const Index = () => {
         {/* Auto-Scrolling Image Section */}
         <ImageCarousel />
         
-        {/* Category-wise Horizontal Book Cards */}
-        <CategoryBooksSection />
+        {/* Recent Books Section (replacing Category section) */}
+        <RecentBooksSection />
         
         {/* Language-wise Horizontal Book Cards */}
         <LanguageBooksSection />

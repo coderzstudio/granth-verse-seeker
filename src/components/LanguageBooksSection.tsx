@@ -60,10 +60,6 @@ const LanguageBooksSection = () => {
   return (
     <section className="py-8 bg-white">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <h2 className="text-2xl font-bold text-gray-900 mb-6 text-left">
-          Language
-        </h2>
-        
         <div className="space-y-8">
           {languages.map((language) => {
             const books = booksByLanguage[language.name] || [];

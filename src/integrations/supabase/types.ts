@@ -138,6 +138,50 @@ export type Database = {
         }
         Relationships: []
       }
+      user_reading_activity: {
+        Row: {
+          book_id: string
+          completed_at: string | null
+          created_at: string
+          id: string
+          last_read_at: string | null
+          started_at: string | null
+          status: string
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          book_id: string
+          completed_at?: string | null
+          created_at?: string
+          id?: string
+          last_read_at?: string | null
+          started_at?: string | null
+          status: string
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          book_id?: string
+          completed_at?: string | null
+          created_at?: string
+          id?: string
+          last_read_at?: string | null
+          started_at?: string | null
+          status?: string
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "user_reading_activity_book_id_fkey"
+            columns: ["book_id"]
+            isOneToOne: false
+            referencedRelation: "books"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
     }
     Views: {
       [_ in never]: never
