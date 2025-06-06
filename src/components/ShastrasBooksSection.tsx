@@ -1,3 +1,4 @@
+
 import React from 'react';
 import { useQuery } from '@tanstack/react-query';
 import { supabase } from '@/integrations/supabase/client';
@@ -107,7 +108,7 @@ const ShastrasBooksSection = () => {
         >
           {shastrasBooks.map((book) => (
             <div key={book.id} className="flex-shrink-0">
-              <BookCard book={book} />
+              <BookCard book={book} size="small" />
             </div>
           ))}
         </div>

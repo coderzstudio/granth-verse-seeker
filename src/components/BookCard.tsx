@@ -6,20 +6,31 @@ import { useNavigate } from 'react-router-dom';
 
 interface BookCardProps {
   book: Book;
+  size?: 'normal' | 'small';
 }
 
-const BookCard: React.FC<BookCardProps> = ({ book }) => {
+const BookCard: React.FC<BookCardProps> = ({ book, size = 'normal' }) => {
   const navigate = useNavigate();
 
   const handleClick = () => {
+    // Add to recent books in localStorage (max 10 items)
+    const recentBookIds = JSON.parse(localStorage.getItem('recentBooks') || '[]');
+    const updatedIds = [book.id, ...recentBookIds.filter((id: string) => id !== book.id)].slice(0, 10);
+    localStorage.setItem('recentBooks', JSON.stringify(updatedIds));
+    
     navigate(`/book/${book.id}`);
   };
 
+  const cardWidth = size === 'small' ? 'max-w-[140px]' : 'max-w-[180px]';
+  const imageIconSize = size === 'small' ? 'h-12 w-12' : 'h-16 w-16';
+  const titleClass = size === 'small' ? 'font-semibold text-sm' : 'font-bold text-lg';
+  const padding = size === 'small' ? 'p-3' : 'p-4';
+
   return (
     <div 
-  onClick={handleClick}
-  className="max-w-[180px] bg-white rounded-lg shadow-md hover:shadow-xl transition-all duration-300 cursor-pointer transform hover:-translate-y-1 border border-orange-100"
->
+      onClick={handleClick}
+      className={`${cardWidth} bg-white rounded-lg shadow-md hover:shadow-xl transition-all duration-300 cursor-pointer transform hover:-translate-y-1 border border-orange-100`}
+    >
       {/* Book Image */}
       <div className="aspect-[3/4] bg-gradient-to-br from-orange-100 to-red-100 rounded-t-lg overflow-hidden">
         {book.image_url ? (
@@ -33,14 +44,14 @@ const BookCard: React.FC<BookCardProps> = ({ book }) => {
           />
         ) : (
           <div className="w-full h-full flex items-center justify-center">
-            <BookOpen className="h-16 w-16 text-orange-400" />
+            <BookOpen className={`${imageIconSize} text-orange-400`} />
           </div>
         )}
       </div>
 
       {/* Book Info */}
-      <div className="p-4">
-        <h3 className="font-bold text-lg text-gray-900 mb-2 line-clamp-2">
+      <div className={padding}>
+        <h3 className={`${titleClass} text-gray-900 mb-2 line-clamp-2`}>
           {book.title}
         </h3>
         
@@ -51,7 +62,7 @@ const BookCard: React.FC<BookCardProps> = ({ book }) => {
           </div>
         )}
 
-        {book.short_description && (
+        {book.short_description && size === 'normal' && (
           <p className="text-sm text-gray-700 mb-3 line-clamp-3">
             {book.short_description}
           </p>
@@ -63,7 +74,7 @@ const BookCard: React.FC<BookCardProps> = ({ book }) => {
           </span>
         </div>
 
-        {book.publication_year && (
+        {book.publication_year && size === 'normal' && (
           <div className="flex items-center text-xs text-gray-500">
             <Calendar className="h-3 w-3 mr-1" />
             <span>{book.publication_year}</span>

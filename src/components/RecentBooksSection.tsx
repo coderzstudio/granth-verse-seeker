@@ -6,40 +6,29 @@ import { Book } from '@/types/book';
 import { ChevronLeft, ChevronRight, BookOpen } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 
-interface UserReadingActivity {
-  id: string;
-  user_id: string;
-  book_id: string;
-  status: 'reading' | 'completed' | 'want_to_read';
-  started_at: string;
-  completed_at?: string;
-  last_read_at?: string;
-  books: Book;
-}
-
 const RecentBooksSection = () => {
   const navigate = useNavigate();
 
-  // Fetch recent books that user has read or is reading
+  // Fetch recent books from localStorage
   const { data: recentBooks = [] } = useQuery({
-    queryKey: ['recent-books'],
+    queryKey: ['recent-books-local'],
     queryFn: async () => {
-      const { data: { user } } = await supabase.auth.getUser();
-      if (!user) return [];
+      const recentBookIds = JSON.parse(localStorage.getItem('recentBooks') || '[]');
+      if (recentBookIds.length === 0) return [];
 
       const { data, error } = await supabase
-        .from('user_reading_activity')
-        .select(`
-          *,
-          books (*)
-        `)
-        .eq('user_id', user.id)
-        .in('status', ['reading', 'completed'])
-        .order('last_read_at', { ascending: false })
-        .limit(10);
+        .from('books')
+        .select('*')
+        .in('id', recentBookIds);
       
       if (error) throw error;
-      return data as UserReadingActivity[];
+      
+      // Sort books according to the order in localStorage (most recent first)
+      const sortedBooks = recentBookIds
+        .map((id: string) => data?.find(book => book.id === id))
+        .filter(Boolean) as Book[];
+      
+      return sortedBooks;
     }
   });
 
@@ -55,6 +44,15 @@ const RecentBooksSection = () => {
     if (container) {
       container.scrollBy({ left: 200, behavior: 'smooth' });
     }
+  };
+
+  const handleBookClick = (bookId: string) => {
+    // Add to recent books in localStorage (max 10 items)
+    const recentBookIds = JSON.parse(localStorage.getItem('recentBooks') || '[]');
+    const updatedIds = [bookId, ...recentBookIds.filter((id: string) => id !== bookId)].slice(0, 10);
+    localStorage.setItem('recentBooks', JSON.stringify(updatedIds));
+    
+    navigate(`/book/${bookId}`);
   };
 
   if (recentBooks.length === 0) {
@@ -101,17 +99,17 @@ const RecentBooksSection = () => {
           className="flex space-x-3 overflow-x-auto scrollbar-hide scroll-smooth pb-4"
           style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}
         >
-          {recentBooks.map((activity) => (
+          {recentBooks.map((book) => (
             <div
-              key={activity.id}
-              onClick={() => navigate(`/book/${activity.book_id}`)}
+              key={book.id}
+              onClick={() => handleBookClick(book.id)}
               className="flex-shrink-0 w-32 bg-white rounded-lg shadow-md hover:shadow-xl transition-all duration-300 cursor-pointer transform hover:-translate-y-1"
             >
               <div className="aspect-[3/4] bg-gradient-to-br from-orange-100 to-red-100 rounded-t-lg overflow-hidden">
-                {activity.books.image_url ? (
+                {book.image_url ? (
                   <img
-                    src={activity.books.image_url}
-                    alt={activity.books.title}
+                    src={book.image_url}
+                    alt={book.title}
                     className="w-full h-full object-cover"
                     onError={(e) => {
                       e.currentTarget.src = '/placeholder.svg';
@@ -125,20 +123,13 @@ const RecentBooksSection = () => {
               </div>
               <div className="p-2">
                 <h4 className="font-semibold text-gray-900 text-xs line-clamp-2 mb-1">
-                  {activity.books.title}
+                  {book.title}
                 </h4>
-                {activity.books.author && (
+                {book.author && (
                   <p className="text-xs text-gray-600 truncate">
-                    {activity.books.author}
+                    {book.author}
                   </p>
                 )}
-                <div className="mt-1 flex items-center justify-between">
-                  <span className={`text-xs font-medium ${
-                    activity.status === 'completed' ? 'text-green-600' : 'text-blue-600'
-                  }`}>
-                    {activity.status === 'completed' ? '✓' : '📖'}
-                  </span>
-                </div>
               </div>
             </div>
           ))}
