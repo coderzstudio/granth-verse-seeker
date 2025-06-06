@@ -18,6 +18,7 @@ export type Database = {
           id: string
           image_url: string | null
           isbn: string | null
+          open_count: number
           pdf_drive_link: string | null
           publication_year: number | null
           publisher: string | null
@@ -34,6 +35,7 @@ export type Database = {
           id?: string
           image_url?: string | null
           isbn?: string | null
+          open_count?: number
           pdf_drive_link?: string | null
           publication_year?: number | null
           publisher?: string | null
@@ -50,6 +52,7 @@ export type Database = {
           id?: string
           image_url?: string | null
           isbn?: string | null
+          open_count?: number
           pdf_drive_link?: string | null
           publication_year?: number | null
           publisher?: string | null
