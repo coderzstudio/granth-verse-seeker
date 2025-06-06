@@ -3,6 +3,7 @@ import React from 'react';
 import Navbar from '@/components/Navbar';
 import ImageCarousel from '@/components/ImageCarousel';
 import RecentBooksSection from '@/components/RecentBooksSection';
+import ShastrasBooksSection from '@/components/ShastrasBooksSection';
 import DonationSection from '@/components/DonationSection';
 import Footer from '@/components/Footer';
 
@@ -17,8 +18,11 @@ const Index = () => {
         {/* Auto-Scrolling Image Section */}
         <ImageCarousel />
         
-        {/* Recent Books Section (replacing Category section) */}
+        {/* Recent Books Section */}
         <RecentBooksSection />
+        
+        {/* Shastras Section - Top 10 most frequently read books */}
+        <ShastrasBooksSection />
         
         {/* Donation Section */}
         <DonationSection />
