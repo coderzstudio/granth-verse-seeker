@@ -31,14 +31,14 @@ const BookDetail = () => {
 
   // Fetch related books
   const { data: relatedBooks = [] } = useQuery({
-    queryKey: ['related-books', book?.category, book?.language, id],
+    queryKey: ['related-books', book?.category, id],
     queryFn: async () => {
       if (!book) return [];
       
       const { data, error } = await supabase
         .from('books')
         .select('*')
-        .or(`category.eq.${book.category},language.eq.${book.language}`)
+        .eq('category', book.category)
         .neq('id', book.id)
         .limit(4);
       
@@ -131,9 +131,6 @@ const BookDetail = () => {
                   )}
 
                   <div className="flex flex-wrap gap-2 mb-4">
-                    <span className="px-3 py-1 bg-orange-100 text-orange-800 text-sm rounded-full">
-                      {book.language}
-                    </span>
                     <span className="px-3 py-1 bg-red-100 text-red-800 text-sm rounded-full">
                       {book.category}
                     </span>

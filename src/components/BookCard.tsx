@@ -58,9 +58,6 @@ const BookCard: React.FC<BookCardProps> = ({ book }) => {
         )}
 
         <div className="flex flex-wrap gap-2 mb-3">
-          <span className="px-2 py-1 bg-orange-100 text-orange-800 text-xs rounded-full">
-            {book.language}
-          </span>
           <span className="px-2 py-1 bg-red-100 text-red-800 text-xs rounded-full">
             {book.category}
           </span>

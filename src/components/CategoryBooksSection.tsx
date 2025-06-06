@@ -127,11 +127,6 @@ const CategoryBooksSection = () => {
                             {book.author}
                           </p>
                         )}
-                        <div className="mt-1">
-                          <span className="inline-block px-1 py-0.5 bg-orange-100 text-orange-800 text-xs rounded-full">
-                            {book.language}
-                          </span>
-                        </div>
                       </div>
                     </div>
                   ))}

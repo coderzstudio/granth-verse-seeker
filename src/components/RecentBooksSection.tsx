@@ -133,9 +133,6 @@ const RecentBooksSection = () => {
                   </p>
                 )}
                 <div className="mt-1 flex items-center justify-between">
-                  <span className="inline-block px-1 py-0.5 bg-orange-100 text-orange-800 text-xs rounded-full">
-                    {activity.books.language}
-                  </span>
                   <span className={`text-xs font-medium ${
                     activity.status === 'completed' ? 'text-green-600' : 'text-blue-600'
                   }`}>
