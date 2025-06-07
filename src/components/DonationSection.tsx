@@ -1,8 +1,26 @@
-
 import React from 'react';
-import { Heart, Users, BookOpen, Globe } from 'lucide-react';
+import { Heart, Users, BookOpen, Globe, Share2 } from 'lucide-react';
 
 const DonationSection = () => {
+  const handleShare = () => {
+    if (navigator.share) {
+      navigator.share({
+        title: 'Support Free Hindu Education',
+        text: 'Join the mission to make sacred Hindu literature accessible to everyone',
+        url: window.location.href,
+      })
+      .catch(error => console.log('Error sharing:', error));
+    } else {
+      // Fallback for browsers that don't support Web Share API
+      navigator.clipboard.writeText(window.location.href)
+        .then(() => alert('Link copied to clipboard! Share it with others.'))
+        .catch(err => {
+          console.error('Could not copy text: ', err);
+          prompt('Copy this link to share:', window.location.href);
+        });
+    }
+  };
+
   return (
     <section className="py-16 bg-gradient-to-r from-orange-600 to-red-600 text-white">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -60,12 +78,12 @@ const DonationSection = () => {
 
             {/* CTA Button */}
             <div className="flex flex-col sm:flex-row gap-4">
-              <button className="bg-white text-orange-600 px-8 py-3 rounded-lg font-semibold hover:bg-orange-50 transition-colors flex items-center justify-center">
-                <Heart className="h-5 w-5 mr-2" />
-                Donate Now
-              </button>
-              <button className="border-2 border-white text-white px-8 py-3 rounded-lg font-semibold hover:bg-white hover:text-orange-600 transition-colors">
-                Learn More
+              <button 
+                onClick={handleShare}
+                className="border-2 border-white text-white px-8 py-3 rounded-lg font-semibold hover:bg-white hover:text-orange-600 transition-colors flex items-center justify-center"
+              >
+                <Share2 className="h-5 w-5 mr-2" />
+                Share Now
               </button>
             </div>
 
