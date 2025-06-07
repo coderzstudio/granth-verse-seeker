@@ -6,6 +6,7 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Index from "./pages/Index";
 import BookDetail from "./pages/BookDetail";
+import Books from "./pages/Books";
 import NotFound from "./pages/NotFound";
 
 // Create QueryClient outside of component to avoid recreation on each render
@@ -26,6 +27,7 @@ const App: React.FC = () => {
       <BrowserRouter>
         <Routes>
           <Route path="/" element={<Index />} />
+          <Route path="/books" element={<Books />} />
           <Route path="/book/:id" element={<BookDetail />} />
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
           <Route path="*" element={<NotFound />} />
