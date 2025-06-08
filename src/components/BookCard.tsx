@@ -1,7 +1,7 @@
 
 import React from 'react';
 import { Book } from '@/types/book';
-import { Calendar, User, BookOpen } from 'lucide-react';
+import { Calendar, BookOpen } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 
 interface BookCardProps {
@@ -29,7 +29,7 @@ const BookCard: React.FC<BookCardProps> = ({ book, size = 'normal' }) => {
   return (
     <div 
       onClick={handleClick}
-      className={`${cardWidth} bg-white rounded-lg shadow-md hover:shadow-xl transition-all duration-300 cursor-pointer transform hover:-translate-y-1 border border-orange-100`}
+      className={`${cardWidth} h-full bg-white rounded-lg shadow-md hover:shadow-xl transition-all duration-300 cursor-pointer transform hover:-translate-y-1 border border-orange-100 flex flex-col`}
     >
       {/* Book Image */}
       <div className="aspect-[3/4] bg-gradient-to-br from-orange-100 to-red-100 rounded-t-lg overflow-hidden p-2">
@@ -50,17 +50,10 @@ const BookCard: React.FC<BookCardProps> = ({ book, size = 'normal' }) => {
       </div>
 
       {/* Book Info */}
-      <div className={padding}>
-        <h3 className={`${titleClass} text-gray-900 mb-2 line-clamp-2`}>
+      <div className={`${padding} flex-1 flex flex-col`}>
+        <h3 className={`${titleClass} text-gray-900 mb-2 line-clamp-2 flex-1`}>
           {book.title}
         </h3>
-        
-        {book.author && (
-          <div className="flex items-center text-sm text-gray-600 mb-2">
-            <User className="h-4 w-4 mr-1" />
-            <span className="truncate">{book.author}</span>
-          </div>
-        )}
 
         {book.short_description && size === 'normal' && (
           <p className="text-sm text-gray-700 mb-3 line-clamp-3">

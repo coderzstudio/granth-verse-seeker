@@ -41,9 +41,9 @@ const Navbar = () => {
               <a href="#" className="hover:bg-orange-700 px-2 py-1 rounded-md text-xs font-medium transition-colors">
                 Categories
               </a>
-              <a href="#" className="hover:bg-orange-700 px-2 py-1 rounded-md text-xs font-medium transition-colors">
+              <Link to="/about" className="hover:bg-orange-700 px-2 py-1 rounded-md text-xs font-medium transition-colors">
                 About
-              </a>
+              </Link>
             </div>
           </div>
 
@@ -86,13 +86,13 @@ const Navbar = () => {
                   >
                     Categories
                   </a>
-                  <a 
-                    href="#" 
+                  <Link 
+                    to="/about" 
                     className="text-xs font-medium hover:text-orange-200 transition-colors py-1 px-3 hover:bg-orange-700 rounded-md"
                     onClick={() => setIsMenuOpen(false)}
                   >
                     About
-                  </a>
+                  </Link>
                 </div>
               </SheetContent>
             </Sheet>

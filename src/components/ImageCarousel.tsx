@@ -64,7 +64,7 @@ const ImageCarousel = () => {
   }
 
   return (
-    <div className="relative h-64 w-full overflow-hidden bg-gray-900">
+    <div className="relative h-64 w-full overflow-hidden">
       {/* Images */}
       <div 
         className="flex transition-transform duration-500 ease-in-out h-full"
@@ -75,18 +75,20 @@ const ImageCarousel = () => {
             <img
               src={image.image_url}
               alt={image.title || `Slide ${index + 1}`}
-              className="w-full h-full object-contain bg-gray-900"
+              className="w-full h-full object-cover"
             />
-            <div className="absolute inset-0 bg-black bg-opacity-40 flex items-center justify-center">
-              <div className="text-center text-white px-4">
-                {image.title && (
-                  <h2 className="text-4xl font-bold mb-4">{image.title}</h2>
-                )}
-                {image.description && (
-                  <p className="text-xl">{image.description}</p>
-                )}
+            {(image.title || image.description) && (
+              <div className="absolute inset-0 flex items-center justify-center">
+                <div className="text-center text-white px-4">
+                  {image.title && (
+                    <h2 className="text-4xl font-bold mb-4 drop-shadow-lg">{image.title}</h2>
+                  )}
+                  {image.description && (
+                    <p className="text-xl drop-shadow-lg">{image.description}</p>
+                  )}
+                </div>
               </div>
-            </div>
+            )}
           </div>
         ))}
       </div>
