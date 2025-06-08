@@ -113,11 +113,11 @@ const Books: React.FC = () => {
                 value={searchQuery}
                 onChange={setSearchQuery}
                 books={books}
-                className="h-10"
+                className="h-8"
               />
             </div>
             <Select value={selectedCategory} onValueChange={setSelectedCategory}>
-              <SelectTrigger className="w-32 h-10">
+              <SelectTrigger className="w-25 h-8">
                 <SelectValue placeholder="Category" />
               </SelectTrigger>
               <SelectContent>
