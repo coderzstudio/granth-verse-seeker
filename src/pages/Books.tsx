@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { useQuery } from '@tanstack/react-query';
 import { supabase } from '@/integrations/supabase/client';
 import Navbar from '@/components/Navbar';
@@ -108,9 +108,17 @@ const Books: React.FC = () => {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
           {/* Search and Filter Section */}
           <div className="flex items-center gap-4 mb-8 w-full">
+            <div className="flex-1">
+              <SearchBar 
+                value={searchQuery}
+                onChange={setSearchQuery}
+                books={books}
+                className="h-10"
+              />
+            </div>
             <Select value={selectedCategory} onValueChange={setSelectedCategory}>
-              <SelectTrigger className="w-40">
-                <SelectValue placeholder="Select category" />
+              <SelectTrigger className="w-32 h-10">
+                <SelectValue placeholder="Category" />
               </SelectTrigger>
               <SelectContent>
                 <SelectItem value="all">All Categories</SelectItem>
@@ -121,14 +129,6 @@ const Books: React.FC = () => {
                 ))}
               </SelectContent>
             </Select>
-            
-            <div className="flex-1">
-              <SearchBar 
-                value={searchQuery}
-                onChange={setSearchQuery}
-                books={books}
-              />
-            </div>
           </div>
 
           {/* Books by Category */}
@@ -137,29 +137,33 @@ const Books: React.FC = () => {
               <p className="text-gray-500 text-lg">No books found matching your criteria.</p>
             </div>
           ) : (
-            <div className="space-y-8">
+            <div className="space-y-6">
               {Object.entries(booksByCategory).map(([category, categoryBooks]) => (
                 <Collapsible 
                   key={category} 
                   open={!collapsedCategories.has(category)}
                   onOpenChange={() => toggleCategory(category)}
                 >
-                  <CollapsibleTrigger className="flex items-center justify-between w-full p-4 bg-white rounded-lg shadow-md hover:shadow-lg transition-shadow">
-                    <h2 className="text-xl font-semibold text-gray-900">{category}</h2>
+                  <CollapsibleTrigger className="flex items-center justify-between w-full py-2 px-1 hover:bg-orange-50 rounded transition-colors">
                     <div className="flex items-center space-x-2">
-                      <span className="text-sm text-gray-500">({categoryBooks.length} books)</span>
-                      {collapsedCategories.has(category) ? (
-                        <ChevronDown className="h-5 w-5 text-gray-500" />
-                      ) : (
-                        <ChevronUp className="h-5 w-5 text-gray-500" />
-                      )}
+                      <h2 className="text-lg font-medium text-gray-800">{category}</h2>
+                      <span className="text-sm text-gray-500">({categoryBooks.length})</span>
                     </div>
+                    {collapsedCategories.has(category) ? (
+                      <ChevronDown className="h-4 w-4 text-gray-500" />
+                    ) : (
+                      <ChevronUp className="h-4 w-4 text-gray-500" />
+                    )}
                   </CollapsibleTrigger>
                   
-                  <CollapsibleContent className="mt-4">
+                  <CollapsibleContent className="mt-2">
                     <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
                       {categoryBooks.map((book) => (
-                        <HorizontalBookCard key={book.id} book={book} className="rounded-lg" />
+                        <HorizontalBookCard 
+                          key={book.id} 
+                          book={book} 
+                          className="rounded-lg shadow-sm hover:shadow-md transition-shadow border border-orange-100 bg-white"
+                        />
                       ))}
                     </div>
                   </CollapsibleContent>
