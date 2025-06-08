@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from 'react';
 import { useQuery } from '@tanstack/react-query';
 import { supabase } from '@/integrations/supabase/client';
@@ -107,27 +106,10 @@ const Books: React.FC = () => {
       <Navbar />
       <div className="min-h-screen bg-gradient-to-br from-orange-50 to-red-50 pt-16">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-          {/* Header */}
-          <div className="text-center mb-8">
-            <h1 className="text-4xl font-bold text-gray-900 mb-4">Books Library</h1>
-            <p className="text-lg text-gray-600 mb-8">
-              Discover and explore our collection of sacred texts and literature
-            </p>
-          </div>
-
-          {/* Search Bar */}
-          <div className="mb-8">
-            <SearchBar 
-              value={searchQuery}
-              onChange={setSearchQuery}
-              books={books}
-            />
-          </div>
-
-          {/* Category Filter - Dropdown that's open by default */}
-          <div className="mb-8">
+          {/* Search and Filter Section */}
+          <div className="flex items-center gap-4 mb-8 w-full">
             <Select value={selectedCategory} onValueChange={setSelectedCategory}>
-              <SelectTrigger className="w-64 mx-auto">
+              <SelectTrigger className="w-40">
                 <SelectValue placeholder="Select category" />
               </SelectTrigger>
               <SelectContent>
@@ -139,6 +121,14 @@ const Books: React.FC = () => {
                 ))}
               </SelectContent>
             </Select>
+            
+            <div className="flex-1">
+              <SearchBar 
+                value={searchQuery}
+                onChange={setSearchQuery}
+                books={books}
+              />
+            </div>
           </div>
 
           {/* Books by Category */}
@@ -154,8 +144,8 @@ const Books: React.FC = () => {
                   open={!collapsedCategories.has(category)}
                   onOpenChange={() => toggleCategory(category)}
                 >
-                  <CollapsibleTrigger className="flex items-center justify-between w-full p-4 bg-white rounded-lg shadow-md hover:shadow-lg transition-shadow border border-orange-100">
-                    <h2 className="text-2xl font-bold text-gray-900">{category}</h2>
+                  <CollapsibleTrigger className="flex items-center justify-between w-full p-4 bg-white rounded-lg shadow-md hover:shadow-lg transition-shadow">
+                    <h2 className="text-xl font-semibold text-gray-900">{category}</h2>
                     <div className="flex items-center space-x-2">
                       <span className="text-sm text-gray-500">({categoryBooks.length} books)</span>
                       {collapsedCategories.has(category) ? (
@@ -169,7 +159,7 @@ const Books: React.FC = () => {
                   <CollapsibleContent className="mt-4">
                     <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
                       {categoryBooks.map((book) => (
-                        <HorizontalBookCard key={book.id} book={book} />
+                        <HorizontalBookCard key={book.id} book={book} className="rounded-lg" />
                       ))}
                     </div>
                   </CollapsibleContent>
