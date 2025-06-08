@@ -21,7 +21,7 @@ const BookCard: React.FC<BookCardProps> = ({ book, size = 'normal' }) => {
     navigate(`/book/${book.id}`);
   };
 
-  const cardWidth = size === 'small' ? 'max-w-[140px]' : 'max-w-[180px]';
+  const cardWidth = size === 'small' ? 'w-[140px]' : 'w-[180px]';
   const imageIconSize = size === 'small' ? 'h-12 w-12' : 'h-16 w-16';
   const titleClass = size === 'small' ? 'font-semibold text-sm' : 'font-bold text-lg';
   const padding = size === 'small' ? 'p-3' : 'p-4';
@@ -32,12 +32,12 @@ const BookCard: React.FC<BookCardProps> = ({ book, size = 'normal' }) => {
       className={`${cardWidth} bg-white rounded-lg shadow-md hover:shadow-xl transition-all duration-300 cursor-pointer transform hover:-translate-y-1 border border-orange-100`}
     >
       {/* Book Image */}
-      <div className="aspect-[3/4] bg-gradient-to-br from-orange-100 to-red-100 rounded-t-lg overflow-hidden">
+      <div className="aspect-[3/4] bg-gradient-to-br from-orange-100 to-red-100 rounded-t-lg overflow-hidden p-2">
         {book.image_url ? (
           <img
             src={book.image_url}
             alt={book.title}
-            className="w-full h-full object-cover"
+            className="w-full h-full object-cover rounded"
             onError={(e) => {
               e.currentTarget.src = '/placeholder.svg';
             }}
