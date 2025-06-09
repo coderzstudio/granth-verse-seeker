@@ -73,7 +73,7 @@ const ShastrasBooksSection = () => {
             Shastras
           </h2>
           <Link to="/books">
-            <Button variant="outline" className="bg-white hover:bg-gray-50">
+            <Button className="hover:bg-gray-30">
               View All
             </Button>
           </Link>
