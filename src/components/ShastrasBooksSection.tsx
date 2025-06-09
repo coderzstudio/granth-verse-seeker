@@ -53,7 +53,7 @@ const ShastrasBooksSection = () => {
     return (
       <section className="py-8 bg-gradient-to-br from-yellow-50 to-orange-50">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <h2 className="text-2xl font-bold text-gray-900 mb-6 text-left">
+          <h2 className="text-lg font-bold text-gray-900 mb-6 text-left">
             Shastras
           </h2>
           <div className="text-center py-8">
@@ -69,7 +69,7 @@ const ShastrasBooksSection = () => {
     <section className="py-8 bg-gradient-to-br from-yellow-50 to-orange-50">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between mb-6">
-          <h2 className="text-2xl font-bold text-gray-900 text-left">
+          <h2 className="text-lg font-bold text-gray-900 text-left">
             Shastras
           </h2>
           <Link to="/books">
