@@ -117,7 +117,7 @@ const Books: React.FC = () => {
               />
             </div>
             <Select value={selectedCategory} onValueChange={setSelectedCategory}>
-              <SelectTrigger className="w-8 h-8">
+              <SelectTrigger className="w-10 h-8">
                 <SelectValue placeholder="Category" />
               </SelectTrigger>
               <SelectContent>
