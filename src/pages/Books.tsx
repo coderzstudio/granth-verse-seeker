@@ -160,8 +160,7 @@ const Books: React.FC = () => {
                       {categoryBooks.map((book) => (
                         <HorizontalBookCard 
                           key={book.id} 
-                          book={book} 
-                          className="rounded-lg shadow-sm hover:shadow-md transition-shadow border border-orange-100 bg-white"
+                          book={book}
                         />
                       ))}
                     </div>
