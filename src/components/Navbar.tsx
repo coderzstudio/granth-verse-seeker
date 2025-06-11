@@ -38,9 +38,9 @@ const Navbar = () => {
               <Link to="/books" className="hover:bg-orange-700 px-2 py-1 rounded-md text-xs font-medium transition-colors">
                 Books
               </Link>
-              <a href="#" className="hover:bg-orange-700 px-2 py-1 rounded-md text-xs font-medium transition-colors">
-                Categories
-              </a>
+              <Link to="/naam-jaap" className="hover:bg-orange-700 px-2 py-1 rounded-md text-xs font-medium transition-colors">
+                Naam Jaap
+              </Link>
               <Link to="/about" className="hover:bg-orange-700 px-2 py-1 rounded-md text-xs font-medium transition-colors">
                 About
               </Link>
@@ -79,13 +79,13 @@ const Navbar = () => {
                   >
                     Books
                   </Link>
-                  <a 
-                    href="#" 
+                  <Link 
+                    to="/naam-jaap" 
                     className="text-xs font-medium hover:text-orange-200 transition-colors py-1 px-3 hover:bg-orange-700 rounded-md"
                     onClick={() => setIsMenuOpen(false)}
                   >
-                    Categories
-                  </a>
+                    Naam Jaap
+                  </Link>
                   <Link 
                     to="/about" 
                     className="text-xs font-medium hover:text-orange-200 transition-colors py-1 px-3 hover:bg-orange-700 rounded-md"

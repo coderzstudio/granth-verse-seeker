@@ -4,10 +4,10 @@ import { useParams, useNavigate } from 'react-router-dom';
 import { useQuery } from '@tanstack/react-query';
 import { supabase } from '@/integrations/supabase/client';
 import { Book } from '@/types/book';
-import { ArrowLeft, User, Calendar, Tag } from 'lucide-react';
-import BookCard from '@/components/BookCard';
+import { ArrowLeft, User, Calendar, Tag, ChevronLeft, ChevronRight } from 'lucide-react';
 import PDFViewer from '@/components/PDFViewer';
 import { Button } from '@/components/ui/button';
+import RelatedBooksCarousel from '@/components/RelatedBooksCarousel';
 
 const BookDetail = () => {
   const { id } = useParams<{ id: string }>();
@@ -29,7 +29,7 @@ const BookDetail = () => {
     enabled: !!id
   });
 
-  // Fetch related books
+  // Fetch related books (increased limit for better carousel experience)
   const { data: relatedBooks = [] } = useQuery({
     queryKey: ['related-books', book?.category, id],
     queryFn: async () => {
@@ -40,7 +40,7 @@ const BookDetail = () => {
         .select('*')
         .eq('category', book.category)
         .neq('id', book.id)
-        .limit(4);
+        .limit(12);
       
       if (error) throw error;
       return data as Book[];
@@ -90,111 +90,94 @@ const BookDetail = () => {
       </header>
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-          {/* Main Content */}
-          <div className="lg:col-span-2">
+        {/* Main Content */}
+        <div className="mb-8">
+          <div className="bg-white rounded-lg shadow-md p-6 mb-6">
+            <div className="flex flex-col md:flex-row gap-6">
+              {/* Book Cover */}
+              <div className="flex-shrink-0">
+                <div className="w-48 h-64 bg-gradient-to-br from-orange-100 to-red-100 rounded-lg overflow-hidden">
+                  {book.image_url ? (
+                    <img
+                      src={book.image_url}
+                      alt={book.title}
+                      className="w-full h-full object-cover"
+                    />
+                  ) : (
+                    <div className="w-full h-full flex items-center justify-center">
+                      <span className="text-4xl">📖</span>
+                    </div>
+                  )}
+                </div>
+              </div>
+
+              {/* Book Info */}
+              <div className="flex-1">
+                <h1 className="text-3xl font-bold text-gray-900 mb-4">{book.title}</h1>
+                
+                {book.author && (
+                  <div className="flex items-center text-gray-600 mb-2">
+                    <User className="h-5 w-5 mr-2" />
+                    <span className="text-lg">{book.author}</span>
+                  </div>
+                )}
+
+                {book.publication_year && (
+                  <div className="flex items-center text-gray-600 mb-4">
+                    <Calendar className="h-5 w-5 mr-2" />
+                    <span>{book.publication_year}</span>
+                  </div>
+                )}
+
+                <div className="flex flex-wrap gap-2 mb-4">
+                  <span className="px-3 py-1 bg-red-100 text-red-800 text-sm rounded-full">
+                    {book.category}
+                  </span>
+                </div>
+
+                {book.tags && book.tags.length > 0 && (
+                  <div className="mb-4">
+                    <div className="flex items-center mb-2">
+                      <Tag className="h-4 w-4 mr-2 text-gray-500" />
+                      <span className="text-sm font-medium text-gray-700">Tags:</span>
+                    </div>
+                    <div className="flex flex-wrap gap-1">
+                      {book.tags.map((tag, index) => (
+                        <span
+                          key={index}
+                          className="px-2 py-1 bg-gray-100 text-gray-700 text-xs rounded"
+                        >
+                          {tag}
+                        </span>
+                      ))}
+                    </div>
+                  </div>
+                )}
+              </div>
+            </div>
+          </div>
+
+          {/* Description */}
+          {book.description && (
             <div className="bg-white rounded-lg shadow-md p-6 mb-6">
-              <div className="flex flex-col md:flex-row gap-6">
-                {/* Book Cover */}
-                <div className="flex-shrink-0">
-                  <div className="w-48 h-64 bg-gradient-to-br from-orange-100 to-red-100 rounded-lg overflow-hidden">
-                    {book.image_url ? (
-                      <img
-                        src={book.image_url}
-                        alt={book.title}
-                        className="w-full h-full object-cover"
-                      />
-                    ) : (
-                      <div className="w-full h-full flex items-center justify-center">
-                        <span className="text-4xl">📖</span>
-                      </div>
-                    )}
-                  </div>
-                </div>
-
-                {/* Book Info */}
-                <div className="flex-1">
-                  <h1 className="text-3xl font-bold text-gray-900 mb-4">{book.title}</h1>
-                  
-                  {book.author && (
-                    <div className="flex items-center text-gray-600 mb-2">
-                      <User className="h-5 w-5 mr-2" />
-                      <span className="text-lg">{book.author}</span>
-                    </div>
-                  )}
-
-                  {book.publication_year && (
-                    <div className="flex items-center text-gray-600 mb-4">
-                      <Calendar className="h-5 w-5 mr-2" />
-                      <span>{book.publication_year}</span>
-                    </div>
-                  )}
-
-                  <div className="flex flex-wrap gap-2 mb-4">
-                    <span className="px-3 py-1 bg-red-100 text-red-800 text-sm rounded-full">
-                      {book.category}
-                    </span>
-                  </div>
-
-                  {book.tags && book.tags.length > 0 && (
-                    <div className="mb-4">
-                      <div className="flex items-center mb-2">
-                        <Tag className="h-4 w-4 mr-2 text-gray-500" />
-                        <span className="text-sm font-medium text-gray-700">Tags:</span>
-                      </div>
-                      <div className="flex flex-wrap gap-1">
-                        {book.tags.map((tag, index) => (
-                          <span
-                            key={index}
-                            className="px-2 py-1 bg-gray-100 text-gray-700 text-xs rounded"
-                          >
-                            {tag}
-                          </span>
-                        ))}
-                      </div>
-                    </div>
-                  )}
-                </div>
+              <h2 className="text-xl font-bold text-gray-900 mb-4">Description</h2>
+              <div className="prose prose-gray max-w-none">
+                <p className="text-gray-700 leading-relaxed">{book.description}</p>
               </div>
             </div>
+          )}
 
-            {/* Description */}
-            {book.description && (
-              <div className="bg-white rounded-lg shadow-md p-6 mb-6">
-                <h2 className="text-xl font-bold text-gray-900 mb-4">Description</h2>
-                <div className="prose prose-gray max-w-none">
-                  <p className="text-gray-700 leading-relaxed">{book.description}</p>
-                </div>
-              </div>
-            )}
-
-            {/* PDF Viewer */}
-            {book.pdf_drive_link && (
-              <div className="mb-6">
-                <h2 className="text-xl font-bold text-gray-900 mb-4">Read Online</h2>
-                <PDFViewer pdfUrl={book.pdf_drive_link} title={book.title} />
-              </div>
-            )}
-          </div>
-
-          {/* Sidebar - Related Books */}
-          <div className="lg:col-span-1">
-            <div className="bg-white rounded-lg shadow-md p-6">
-              <h3 className="text-xl font-bold text-gray-900 mb-4">Related Books</h3>
-              {relatedBooks.length > 0 ? (
-                <div className="space-y-4">
-                  {relatedBooks.map((relatedBook) => (
-                    <div key={relatedBook.id} className="transform scale-95">
-                      <BookCard book={relatedBook} />
-                    </div>
-                  ))}
-                </div>
-              ) : (
-                <p className="text-gray-500 text-center py-8">No related books found</p>
-              )}
+          {/* PDF Viewer */}
+          {book.pdf_drive_link && (
+            <div className="mb-6">
+              <h2 className="text-xl font-bold text-gray-900 mb-4">Read Online</h2>
+              <PDFViewer pdfUrl={book.pdf_drive_link} title={book.title} />
             </div>
-          </div>
+          )}
         </div>
+
+        {/* Related Books Horizontal Carousel */}
+        <RelatedBooksCarousel books={relatedBooks} />
       </div>
     </div>
   );
