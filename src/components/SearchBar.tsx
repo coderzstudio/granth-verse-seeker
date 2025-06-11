@@ -2,6 +2,7 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { Search, X } from 'lucide-react';
 import { Book } from '@/types/book';
+import { useNavigate } from 'react-router-dom';
 
 interface SearchBarProps {
   value: string;
@@ -13,6 +14,7 @@ const SearchBar: React.FC<SearchBarProps> = ({ value, onChange, books }) => {
   const [showSuggestions, setShowSuggestions] = useState(false);
   const [suggestions, setSuggestions] = useState<Book[]>([]);
   const searchRef = useRef<HTMLDivElement>(null);
+  const navigate = useNavigate();
 
   useEffect(() => {
     if (value.length > 0) {
@@ -44,6 +46,7 @@ const SearchBar: React.FC<SearchBarProps> = ({ value, onChange, books }) => {
   const handleSuggestionClick = (book: Book) => {
     onChange(book.title);
     setShowSuggestions(false);
+    navigate(`/book/${book.id}`);
   };
 
   const clearSearch = () => {
@@ -52,7 +55,7 @@ const SearchBar: React.FC<SearchBarProps> = ({ value, onChange, books }) => {
   };
 
   return (
-    <div ref={searchRef} className="relative max-w-2xl mx-auto">
+    <div ref={searchRef} className="relative w-full">
       <div className="relative">
         <Search className="absolute left-4 top-1/2 transform -translate-y-1/2 text-gray-400 h-5 w-5" />
         <input
@@ -60,7 +63,7 @@ const SearchBar: React.FC<SearchBarProps> = ({ value, onChange, books }) => {
           value={value}
           onChange={(e) => onChange(e.target.value)}
           placeholder="Search for books, authors, or categories..."
-          className="w-full pl-12 pr-12 py-4 text-lg border-2 border-orange-200 rounded-xl focus:outline-none focus:border-orange-500 transition-colors bg-white shadow-sm"
+          className="w-full pl-12 pr-12 py-3 text-base border-2 border-orange-200 rounded-xl focus:outline-none focus:border-orange-500 transition-colors bg-white shadow-sm"
         />
         {value && (
           <button
