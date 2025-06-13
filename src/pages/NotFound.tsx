@@ -1,6 +1,6 @@
+
 import { useLocation, useNavigate } from "react-router-dom";
 import { useEffect } from "react";
-import { motion } from "framer-motion";
 
 const NotFound = () => {
   const location = useLocation();
@@ -14,21 +14,9 @@ const NotFound = () => {
   }, [location.pathname]);
 
   return (
-    <motion.div
-      initial={{ opacity: 0 }}
-      animate={{ opacity: 1 }}
-      exit={{ opacity: 0 }}
-      transition={{ duration: 0.5 }}
-      className="min-h-screen flex flex-col items-center justify-center bg-gradient-to-br from-blue-50 to-indigo-100 p-4"
-    >
+    <div className="min-h-screen flex flex-col items-center justify-center bg-gradient-to-br from-blue-50 to-indigo-100 p-4 animate-fade-in">
       <div className="max-w-md w-full bg-white rounded-xl shadow-lg p-8 text-center">
-        <motion.div
-          animate={{ 
-            scale: [1, 1.1, 1],
-            rotate: [0, 5, -5, 0] 
-          }}
-          transition={{ duration: 1.5, repeat: Infinity }}
-        >
+        <div className="animate-bounce">
           <svg
             className="w-24 h-24 mx-auto text-indigo-500"
             fill="none"
@@ -43,7 +31,7 @@ const NotFound = () => {
               d="M9.172 16.172a4 4 0 015.656 0M9 10h.01M15 10h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
             />
           </svg>
-        </motion.div>
+        </div>
 
         <h1 className="text-5xl font-bold text-gray-800 mt-6 mb-2">404</h1>
         <h2 className="text-2xl font-semibold text-gray-700 mb-4">
@@ -55,30 +43,26 @@ const NotFound = () => {
         </p>
 
         <div className="flex flex-col sm:flex-row gap-4 justify-center">
-          <motion.button
-            whileHover={{ scale: 1.05 }}
-            whileTap={{ scale: 0.95 }}
+          <button
             onClick={() => navigate(-1)}
-            className="px-6 py-2 bg-gray-200 text-gray-800 rounded-lg font-medium hover:bg-gray-300 transition-colors"
+            className="px-6 py-2 bg-gray-200 text-gray-800 rounded-lg font-medium hover:bg-gray-300 transition-all duration-200 hover:scale-105 active:scale-95"
           >
             Go Back
-          </motion.button>
+          </button>
           
-          <motion.button
-            whileHover={{ scale: 1.05 }}
-            whileTap={{ scale: 0.95 }}
+          <button
             onClick={() => navigate('/')}
-            className="px-6 py-2 bg-indigo-600 text-white rounded-lg font-medium hover:bg-indigo-700 transition-colors"
+            className="px-6 py-2 bg-indigo-600 text-white rounded-lg font-medium hover:bg-indigo-700 transition-all duration-200 hover:scale-105 active:scale-95"
           >
             Return Home
-          </motion.button>
+          </button>
         </div>
 
         <div className="mt-8 text-sm text-gray-500">
           <p>Need help? <a href="https://www.instagram.com/kl_malviya77/profilecard/?igsh=Zjhva25vbXphaG01" className="text-indigo-600 hover:underline">Contact support</a></p>
         </div>
       </div>
-    </motion.div>
+    </div>
   );
 };
 

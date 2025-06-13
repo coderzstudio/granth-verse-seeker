@@ -47,7 +47,9 @@ const NaamJaap = () => {
 
       {/* Mandala Pattern Background */}
       <div className="absolute inset-0 opacity-10 pointer-events-none">
-        <div className="w-full h-full bg-gradient-radial from-transparent via-orange-100 to-transparent"></div>
+        <div className="w-full h-full" style={{
+          background: 'radial-gradient(circle, transparent, rgba(254, 215, 170, 0.5), transparent)'
+        }}></div>
       </div>
 
       <div className="pt-20 px-4 sm:px-6 lg:px-8">
@@ -140,13 +142,6 @@ const NaamJaap = () => {
         currentTarget={target}
         onTargetChange={handleTargetChange}
       />
-
-      {/* Custom styles for gradient-radial */}
-      <style jsx>{`
-        .bg-gradient-radial {
-          background: radial-gradient(circle, var(--tw-gradient-stops));
-        }
-      `}</style>
     </div>
   );
 };

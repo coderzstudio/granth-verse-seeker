@@ -65,8 +65,12 @@ const RelatedBooksCarousel: React.FC<RelatedBooksCarouselProps> = ({ books }) =>
       
       <div
         ref={scrollContainerRef}
-        className="flex gap-4 overflow-x-auto scrollbar-hide pb-2"
-        style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}
+        className="flex gap-4 overflow-x-auto pb-2"
+        style={{ 
+          scrollbarWidth: 'none', 
+          msOverflowStyle: 'none',
+          WebkitScrollbar: { display: 'none' }
+        }}
       >
         {books.map((book) => (
           <div key={book.id} className="flex-shrink-0">
@@ -74,12 +78,6 @@ const RelatedBooksCarousel: React.FC<RelatedBooksCarouselProps> = ({ books }) =>
           </div>
         ))}
       </div>
-      
-      <style jsx>{`
-        .scrollbar-hide::-webkit-scrollbar {
-          display: none;
-        }
-      `}</style>
     </div>
   );
 };
