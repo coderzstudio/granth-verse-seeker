@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { useQuery } from '@tanstack/react-query';
@@ -29,8 +28,8 @@ const BookDetail = () => {
     enabled: !!id
   });
 
-  // Fetch related books (increased limit for better carousel experience)
-  const { data: relatedBooks = [] } = useQuery({
+  // Fetch related books with caching strategy
+  const { data: relatedBooks = [], isLoading: relatedBooksLoading } = useQuery({
     queryKey: ['related-books', book?.category, id],
     queryFn: async () => {
       if (!book) return [];
@@ -45,7 +44,9 @@ const BookDetail = () => {
       if (error) throw error;
       return data as Book[];
     },
-    enabled: !!book
+    enabled: !!book,
+    staleTime: 5 * 60 * 1000, // 5 minutes
+    refetchOnWindowFocus: false
   });
 
   if (isLoading) {
@@ -92,6 +93,7 @@ const BookDetail = () => {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         {/* Main Content */}
         <div className="mb-8">
+          {/* Book Info */}
           <div className="bg-white rounded-lg shadow-md p-6 mb-6">
             <div className="flex flex-col md:flex-row gap-6">
               {/* Book Cover */}
@@ -176,8 +178,12 @@ const BookDetail = () => {
           )}
         </div>
 
-        {/* Related Books Horizontal Carousel */}
-        <RelatedBooksCarousel books={relatedBooks} />
+        {/* Related Books Horizontal Carousel with Caching */}
+        <RelatedBooksCarousel 
+          books={relatedBooks} 
+          currentBookId={book.id}
+          isLoading={relatedBooksLoading}
+        />
       </div>
     </div>
   );

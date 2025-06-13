@@ -1,15 +1,48 @@
 
-import React from 'react';
+import React, { useEffect, useRef } from 'react';
 import { Book } from '@/types/book';
 import { BookOpen } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 
 interface RelatedBookCardProps {
   book: Book;
+  isCached?: boolean;
+  onVisible?: (id: string) => void;
+  onHidden?: (id: string) => void;
 }
 
-const RelatedBookCard: React.FC<RelatedBookCardProps> = ({ book }) => {
+const RelatedBookCard: React.FC<RelatedBookCardProps> = ({ 
+  book, 
+  isCached = false,
+  onVisible,
+  onHidden 
+}) => {
   const navigate = useNavigate();
+  const cardRef = useRef<HTMLDivElement>(null);
+  const observerRef = useRef<IntersectionObserver | null>(null);
+
+  useEffect(() => {
+    if (!cardRef.current || (!onVisible && !onHidden)) return;
+
+    observerRef.current = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting && entry.intersectionRatio >= 0.5) {
+          onVisible?.(book.id);
+        } else {
+          onHidden?.(book.id);
+        }
+      },
+      { threshold: 0.5 }
+    );
+
+    observerRef.current.observe(cardRef.current);
+
+    return () => {
+      if (observerRef.current) {
+        observerRef.current.disconnect();
+      }
+    };
+  }, [book.id, onVisible, onHidden]);
 
   const handleClick = () => {
     // Add to recent books in localStorage (max 10 items)
@@ -22,9 +55,19 @@ const RelatedBookCard: React.FC<RelatedBookCardProps> = ({ book }) => {
 
   return (
     <div 
+      ref={cardRef}
       onClick={handleClick}
-      className="w-[200px] bg-white rounded-lg border border-orange-100 hover:shadow-lg transition-all duration-300 cursor-pointer transform hover:-translate-y-1 overflow-hidden"
+      className="relative w-[200px] bg-white rounded-lg border border-orange-100 hover:shadow-lg transition-all duration-300 cursor-pointer transform hover:-translate-y-1 overflow-hidden"
     >
+      {/* Cached indicator */}
+      {isCached && (
+        <div className="absolute top-2 right-2 z-10">
+          <span className="px-2 py-1 bg-green-100 text-green-800 text-xs rounded-full">
+            Cached
+          </span>
+        </div>
+      )}
+
       {/* Book Image */}
       <div className="h-[120px] bg-gradient-to-br from-orange-100 to-red-100 overflow-hidden">
         {book.image_url ? (
