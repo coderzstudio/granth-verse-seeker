@@ -1,10 +1,11 @@
-
 export interface CachedBook {
   id: string;
   title: string;
   image_url?: string;
   category: string;
   short_description?: string;
+  created_at: string;
+  updated_at: string;
 }
 
 export interface BookCacheData {
@@ -38,7 +39,9 @@ export class BookCacheManager {
       title: book.title,
       image_url: book.image_url,
       category: book.category,
-      short_description: book.short_description
+      short_description: book.short_description,
+      created_at: book.created_at || new Date().toISOString(),
+      updated_at: book.updated_at || new Date().toISOString()
     };
   }
 
