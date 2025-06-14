@@ -9,6 +9,7 @@ import BookDetail from "./pages/BookDetail";
 import Books from "./pages/Books";
 import About from "./pages/About";
 import NaamJaap from "./pages/NaamJaap";
+import Report from "./pages/Report";
 import NotFound from "./pages/NotFound";
 
 // Create QueryClient outside of component to avoid recreation on each render
@@ -32,6 +33,7 @@ const App: React.FC = () => {
           <Route path="/books" element={<Books />} />
           <Route path="/about" element={<About />} />
           <Route path="/naam-jaap" element={<NaamJaap />} />
+          <Route path="/report" element={<Report />} />
           <Route path="/book/:id" element={<BookDetail />} />
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
           <Route path="*" element={<NotFound />} />

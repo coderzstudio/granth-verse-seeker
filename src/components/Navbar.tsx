@@ -1,6 +1,6 @@
 
 import React, { useState } from 'react';
-import { Menu } from 'lucide-react';
+import { Menu, AlertTriangle } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import {
   Sheet,
@@ -40,6 +40,10 @@ const Navbar = () => {
               </Link>
               <Link to="/naam-jaap" className="hover:bg-orange-700 px-2 py-1 rounded-md text-xs font-medium transition-colors">
                 Naam Jaap
+              </Link>
+              <Link to="/report" className="hover:bg-orange-700 px-2 py-1 rounded-md text-xs font-medium transition-colors flex items-center gap-1">
+                <AlertTriangle className="h-3 w-3" />
+                Report
               </Link>
               <Link to="/about" className="hover:bg-orange-700 px-2 py-1 rounded-md text-xs font-medium transition-colors">
                 About
@@ -85,6 +89,14 @@ const Navbar = () => {
                     onClick={() => setIsMenuOpen(false)}
                   >
                     Naam Jaap
+                  </Link>
+                  <Link 
+                    to="/report" 
+                    className="text-xs font-medium hover:text-orange-200 transition-colors py-1 px-3 hover:bg-orange-700 rounded-md flex items-center gap-1"
+                    onClick={() => setIsMenuOpen(false)}
+                  >
+                    <AlertTriangle className="h-3 w-3" />
+                    Report
                   </Link>
                   <Link 
                     to="/about" 
