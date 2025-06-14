@@ -24,11 +24,16 @@ class NotificationService {
       return [];
     }
 
-    // Filter out expired notifications
+    // Filter out expired notifications and properly type the response
     const now = new Date().toISOString();
-    return data.filter(notification => 
-      !notification.expires_at || notification.expires_at > now
-    );
+    return data
+      .filter(notification => 
+        !notification.expires_at || notification.expires_at > now
+      )
+      .map(notification => ({
+        ...notification,
+        type: notification.type as 'info' | 'success' | 'warning' | 'error'
+      }));
   }
 
   async markAsRead(notificationId: string): Promise<void> {
