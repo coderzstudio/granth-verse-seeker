@@ -44,8 +44,8 @@ const Report = () => {
       const reportData = {
         report_type: formData.reportType,
         description: formData.description,
-        reporter_name: formData.reporterName || null,
-        reporter_email: formData.reporterEmail || null,
+        reporter_name: formData.reporterName,
+        reporter_email: formData.reporterEmail,
         book_id: formData.bookId || null
       };
 
@@ -131,7 +131,7 @@ const Report = () => {
 
                 {/* Book ID (Optional) */}
                 <div className="space-y-2">
-                  <Label htmlFor="bookId">Book ID (Optional)</Label>
+                  <Label htmlFor="bookId">Book ID</Label>
                   <Input
                     id="bookId"
                     type="text"
@@ -160,7 +160,7 @@ const Report = () => {
                 {/* Reporter Information */}
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                   <div className="space-y-2">
-                    <Label htmlFor="reporterName">Your Name (Optional)</Label>
+                    <Label htmlFor="reporterName">Your Name</Label>
                     <Input
                       id="reporterName"
                       type="text"
@@ -170,7 +170,7 @@ const Report = () => {
                     />
                   </div>
                   <div className="space-y-2">
-                    <Label htmlFor="reporterEmail">Your Email (Optional)</Label>
+                    <Label htmlFor="reporterEmail">Your Email</Label>
                     <Input
                       id="reporterEmail"
                       type="email"
