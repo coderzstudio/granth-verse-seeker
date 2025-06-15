@@ -35,14 +35,33 @@ const Mantra: React.FC = () => {
     fetch(GITHUB_MANTRAS_URL)
       .then((resp) => {
         if (!resp.ok) throw new Error("Error fetching mantras");
-        return resp.json();
+        return resp.text(); // Get as text first
       })
       .then((data) => {
-        // data is array of mantra items
-        setMantras(Array.isArray(data) ? data : []);
+        console.log("Raw data from GitHub:", data);
+        
+        // Parse multiple JSON objects separated by newlines
+        const lines = data.trim().split('\n');
+        const parsedMantras: MantraItem[] = [];
+        
+        for (const line of lines) {
+          const trimmedLine = line.trim();
+          if (trimmedLine && !trimmedLine.startsWith('//')) { // Skip empty lines and comments
+            try {
+              const parsedObj = JSON.parse(trimmedLine);
+              parsedMantras.push(parsedObj);
+            } catch (parseError) {
+              console.error("Error parsing line:", trimmedLine, parseError);
+            }
+          }
+        }
+        
+        console.log("Parsed mantras:", parsedMantras);
+        setMantras(parsedMantras);
         setLoading(false);
       })
       .catch((e) => {
+        console.error("Fetch error:", e);
         setErr("Could not load mantras.");
         setLoading(false);
       });
