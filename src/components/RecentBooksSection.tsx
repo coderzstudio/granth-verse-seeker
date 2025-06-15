@@ -1,10 +1,10 @@
-
 import React from 'react';
 import { useQuery } from '@tanstack/react-query';
 import { supabase } from '@/integrations/supabase/client';
 import { Book } from '@/types/book';
 import { ChevronLeft, ChevronRight, BookOpen } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
+import { useInfiniteLoad } from "@/hooks/useInfiniteLoad";
 
 const RecentBooksSection = () => {
   const navigate = useNavigate();
@@ -20,17 +20,20 @@ const RecentBooksSection = () => {
         .from('books')
         .select('*')
         .in('id', recentBookIds);
-      
+
       if (error) throw error;
-      
+
       // Sort books according to the order in localStorage (most recent first)
       const sortedBooks = recentBookIds
         .map((id: string) => data?.find(book => book.id === id))
         .filter(Boolean) as Book[];
-      
+
       return sortedBooks;
     }
   });
+
+  // INFINITE LOAD: Only show a chunk, append more as user scrolls/clicks
+  const { visibleItems, hasMore, loadMore } = useInfiniteLoad<Book>({ items: recentBooks, chunkSize: 5 });
 
   const scrollLeft = () => {
     const container = document.getElementById('recent-books');
@@ -43,6 +46,9 @@ const RecentBooksSection = () => {
     const container = document.getElementById('recent-books');
     if (container) {
       container.scrollBy({ left: 200, behavior: 'smooth' });
+    }
+    if (hasMore) {
+      loadMore();
     }
   };
 
@@ -88,6 +94,7 @@ const RecentBooksSection = () => {
             <button
               onClick={scrollRight}
               className="p-1 rounded-full bg-white shadow-md hover:shadow-lg transition-shadow"
+              disabled={!hasMore}
             >
               <ChevronRight className="h-4 w-4 text-gray-600" />
             </button>
@@ -99,7 +106,7 @@ const RecentBooksSection = () => {
           className="flex space-x-3 overflow-x-auto scrollbar-hide scroll-smooth pb-4"
           style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}
         >
-          {recentBooks.map((book) => (
+          {visibleItems.map((book) => (
             <div
               key={book.id}
               onClick={() => handleBookClick(book.id)}
@@ -133,6 +140,15 @@ const RecentBooksSection = () => {
               </div>
             </div>
           ))}
+          {hasMore && (
+            <button
+              onClick={loadMore}
+              className="flex items-center justify-center px-4 text-sm text-orange-700 font-bold hover:underline min-w-[64px] bg-orange-50 rounded-lg border border-orange-100"
+              aria-label="Load more"
+            >
+              Load more
+            </button>
+          )}
         </div>
       </div>
     </section>

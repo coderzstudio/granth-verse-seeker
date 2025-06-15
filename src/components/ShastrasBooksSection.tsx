@@ -6,6 +6,7 @@ import BookCard from './BookCard';
 import { BookOpen } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
+import { useInfiniteLoad } from "@/hooks/useInfiniteLoad";
 
 const ShastrasBooksSection = () => {
   // Fetch books with hybrid algorithm: random initially, then by popularity
@@ -49,6 +50,9 @@ const ShastrasBooksSection = () => {
     }
   });
 
+  // Virtualize the visible books list with incremental loading
+  const { visibleItems, hasMore, loadMore } = useInfiniteLoad({ items: shastrasBooks, chunkSize: 5 });
+
   if (shastrasBooks.length === 0) {
     return (
       <section className="py-8 bg-gradient-to-br from-yellow-50 to-orange-50">
@@ -80,11 +84,22 @@ const ShastrasBooksSection = () => {
         </div>
         
         <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4">
-          {shastrasBooks.map((book) => (
+          {visibleItems.map((book) => (
             <div key={book.id} className="h-[280px]">
               <BookCard book={book} size="small" />
             </div>
           ))}
+          {hasMore && (
+            <div className="flex items-center justify-center">
+              <button
+                className="px-4 py-2 mt-2 text-sm text-orange-800 font-medium bg-orange-100 hover:bg-orange-200 rounded-xl"
+                onClick={loadMore}
+                aria-label="Load more shastras"
+              >
+                Load more
+              </button>
+            </div>
+          )}
         </div>
       </div>
     </section>
