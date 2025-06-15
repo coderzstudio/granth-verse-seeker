@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from 'react';
 import { Document, Page, pdfjs } from 'react-pdf';
 import { ChevronLeft, ChevronRight, ZoomIn, ZoomOut, Eye, ExternalLink, Loader2 } from 'lucide-react';
@@ -33,6 +32,7 @@ const PDFViewer: React.FC<PDFViewerProps> = ({ pdfUrl, title }) => {
   const [error, setError] = useState<string>('');
   const [useIframe, setUseIframe] = useState<boolean>(false);
   const [processedUrl, setProcessedUrl] = useState<string>('');
+  const [loadTimeout, setLoadTimeout] = useState<ReturnType<typeof setTimeout> | null>(null);
 
   useEffect(() => {
     // Reset state when PDF URL changes
@@ -41,9 +41,30 @@ const PDFViewer: React.FC<PDFViewerProps> = ({ pdfUrl, title }) => {
     setPageNumber(1);
     setNumPages(0);
     setUseIframe(false);
-    
+
     // Process the URL for better compatibility
     processPdfUrl(pdfUrl);
+
+    // Set a max loading timeout (e.g., 15 seconds)
+    if (loadTimeout) clearTimeout(loadTimeout);
+    const timeout = setTimeout(() => {
+      if (loading && !useIframe) {
+        console.error('PDF load timeout reached, falling back to iframe or showing error.');
+        if (pdfUrl.includes('drive.google.com') || pdfUrl.includes('docs.google.com')) {
+          setUseIframe(true);
+          setError('');
+        } else {
+          setError('Unable to load PDF (timeout). Please try the external link below.');
+        }
+        setLoading(false);
+      }
+    }, 15000);
+    setLoadTimeout(timeout);
+
+    return () => {
+      if (timeout) clearTimeout(timeout);
+    };
+    // eslint-disable-next-line
   }, [pdfUrl]);
 
   const processPdfUrl = (url: string) => {
@@ -100,11 +121,19 @@ const PDFViewer: React.FC<PDFViewerProps> = ({ pdfUrl, title }) => {
     setNumPages(numPages);
     setLoading(false);
     setError('');
+    if (loadTimeout) {
+      clearTimeout(loadTimeout);
+      setLoadTimeout(null);
+    }
   };
 
   const onDocumentLoadError = (error: any) => {
     console.error('PDF load error:', error);
     setLoading(false);
+    if (loadTimeout) {
+      clearTimeout(loadTimeout);
+      setLoadTimeout(null);
+    }
     
     // Try iframe fallback for Google Drive or any failed URLs
     if (pdfUrl.includes('drive.google.com') || pdfUrl.includes('docs.google.com')) {
