@@ -39,11 +39,11 @@ const Mantra: React.FC = () => {
       })
       .then((data) => {
         console.log("Raw data from GitHub:", data);
-        
+
         // Parse multiple JSON objects separated by newlines
         const lines = data.trim().split('\n');
         const parsedMantras: MantraItem[] = [];
-        
+
         for (const line of lines) {
           const trimmedLine = line.trim();
           if (trimmedLine && !trimmedLine.startsWith('//')) { // Skip empty lines and comments
@@ -55,8 +55,12 @@ const Mantra: React.FC = () => {
             }
           }
         }
-        
-        console.log("Parsed mantras:", parsedMantras);
+
+        // EXTRA DEBUGGING:
+        console.log("Number of parsed mantras:", parsedMantras.length);
+        if (parsedMantras.length > 0) {
+          console.log("First mantra:", parsedMantras[0]);
+        }
         setMantras(parsedMantras);
         setLoading(false);
       })
@@ -67,12 +71,30 @@ const Mantra: React.FC = () => {
       });
   }, []);
 
+  // LOG what we have for rendering (minimal)
+  console.log("mantras array for rendering:", mantras);
+
   return (
     <div className="max-w-2xl mx-auto pt-24 pb-10 px-2">
       <h1 className="text-2xl font-bold mb-4 text-center">Mantra</h1>
       {loading && <div className="text-center py-8">Loading...</div>}
-      {err && <div className="text-center text-red-600">{err}</div>}
+      {err && (
+        <div className="text-center text-red-600">
+          {err}
+          <div className="text-xs mt-2">
+            Make sure your <code>json.txt</code> file is accessible and properly formatted.<br />
+            (See browser dev console for debug info)
+          </div>
+        </div>
+      )}
       <div className="space-y-4">
+        {/* Log length for debug */}
+        <div className="text-xs text-center text-gray-500 mb-2">
+          (Loaded {mantras.length} mantras)
+        </div>
+        {mantras.length === 0 && !loading && !err && (
+          <div className="text-center text-gray-600">No mantras found.</div>
+        )}
         {mantras.map((m) => (
           <MantraCard
             key={m.id}
