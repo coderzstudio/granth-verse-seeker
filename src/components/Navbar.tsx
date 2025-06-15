@@ -41,6 +41,9 @@ const Navbar = () => {
               <Link to="/naam-jaap" className="hover:bg-orange-700 px-2 py-1 rounded-md text-xs font-medium transition-colors">
                 Naam Jaap
               </Link>
+              <Link to="/mantra" className="hover:bg-orange-700 px-2 py-1 rounded-md text-xs font-medium transition-colors">
+                Mantra
+              </Link>
               <Link to="/report" className="hover:bg-orange-700 px-2 py-1 rounded-md text-xs font-medium transition-colors flex items-center gap-1">
                 <AlertTriangle className="h-3 w-3" />
                 Report
@@ -89,6 +92,13 @@ const Navbar = () => {
                     onClick={() => setIsMenuOpen(false)}
                   >
                     Naam Jaap
+                  </Link>
+                  <Link 
+                    to="/mantra" 
+                    className="text-xs font-medium hover:text-orange-200 transition-colors py-1 px-3 hover:bg-orange-700 rounded-md"
+                    onClick={() => setIsMenuOpen(false)}
+                  >
+                    Mantra
                   </Link>
                   <Link 
                     to="/report" 
