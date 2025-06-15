@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -10,6 +11,11 @@
     <!-- Improved Page Title for SEO -->
     <title>Sanatani Gyan - Read Hindu Scriptures, Shastras, Vedas, and Spiritual Books Online</title>
 
+    <!-- Manifest and Theme Color for PWA -->
+    <link rel="manifest" href="/manifest.webmanifest" />
+    <meta name="theme-color" content="#fbbf24" />
+    <link rel="apple-touch-icon" href="/lovable-uploads/98daf744-58f5-4c66-9b04-2cad5e87236d.png">
+    
     <!-- Primary Meta Tags -->
     <meta name="description" content="Sanatani Gyan is the premier digital library for sacred Hindu literature. Read and explore Shastras, Vedas, Bhagavad Gita, Upanishads, Puranas, Ramayana, Mahabharata, and other spiritual books online, with free access, search, and study tools." />
     <meta name="keywords" content="Hindu books, Sanatani Gyan, granth, online library, Shastras, Vedas, Upanishads, Bhagavad Gita, Puranas, Ramayana, Mahabharata, Hindu scriptures, spiritual texts, Indian philosophy, sacred books, bhakti, jai shri ram, hindi, sanskrit, pdf, ebook, read online, Hinduism, spiritual growth, community" />
@@ -55,5 +61,11 @@
     <!-- IMPORTANT: DO NOT REMOVE THIS SCRIPT TAG OR THIS VERY COMMENT! -->
     <script src="https://cdn.gpteng.co/gptengineer.js" type="module"></script>
     <script type="module" src="/src/main.tsx"></script>
+    <!-- Register service-worker for PWA (for legacy browser support, optional) -->
+    <!-- <script>
+      if ('serviceWorker' in navigator) {
+        navigator.serviceWorker.register('/service-worker.js')
+      }
+    </script> -->
   </body>
 </html>
