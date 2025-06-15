@@ -1,7 +1,3 @@
-
-import React, { useEffect, useState } from "react";
-import { useParams, useNavigate } from "react-router-dom";
-import { ChevronLeft, Star } from "lucide-react";
 import React, { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { ChevronLeft, Star } from "lucide-react";
